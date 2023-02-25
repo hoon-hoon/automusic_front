@@ -1,8 +1,15 @@
+import React from "react";
+import "./App.css";
+import AppRouter from "./AppRouter";
+
+
 function App() {
   return (
-    <div>
-      AutoMusic 프론트.
-    </div>
+    <>
+      <div className="App">
+          <AppRouter />
+      </div>
+    </>
   );
 }
 
