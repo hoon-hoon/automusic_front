@@ -1,8 +1,12 @@
+import { Paper, Box, Container } from "@mui/material";
 import React from "react";
+import { CenteredOverlayForm } from "../components/CenteredOverlayForm";
 
 function Create() {
     return(<>
-    Create페이지입니다.
+    <CenteredOverlayForm>
+        Create page
+    </CenteredOverlayForm>
     </>)
 }
 
