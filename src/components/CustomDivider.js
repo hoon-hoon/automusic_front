@@ -8,6 +8,6 @@ export const CustomDivider = ({children}) => {
 const StyledCustomDivider = styled(Box)`
     border: 1px solid black;
     background-color: black;
-    width: 10vw;
+    width: 100vw;
     height: 10vw;
 `

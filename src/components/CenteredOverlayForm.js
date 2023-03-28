@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Container } from "@mui/material";
-import { CustomDivider } from "./CustomDivider";
 
 export const CenteredOverlayForm = ({ children, backgroundColor }) => {
   return (
@@ -9,9 +8,7 @@ export const CenteredOverlayForm = ({ children, backgroundColor }) => {
         maxWidth={false}
         backgroundColor={backgroundColor}
       >
-        <CustomDivider>
         {children}
-        </CustomDivider>
       </StyledCentralizedContainer>
     </>
   );
