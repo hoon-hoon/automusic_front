@@ -6,6 +6,7 @@ import Chart from "./pages/Chart";
 import Create from "./pages/Create";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
+import Singup from "./pages/Singup";
 
 function AppRouter() {
     return (
@@ -18,6 +19,7 @@ function AppRouter() {
                 <Route path="/board" element={<Board />} />
                 <Route path="/chart" element={<Chart />} />
                 <Route path="/create" element={<Create />} />
+                <Route path="/Singup" element={<Singup />} />
 
             </Routes>
             </body>
