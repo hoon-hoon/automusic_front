@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function Login() {
     const [id, setId] = useState('')
@@ -11,6 +12,10 @@ function Login() {
         setPassword(event.currentTarget.value)
     }
 
+    useEffect(() => {
+    },
+    []);
+
     const onClickLogin = (event) => {
         // 기본 클릭 동작 방지
         event.preventDefault()
@@ -18,7 +23,26 @@ function Login() {
         let userObj = {
             id: id,
             password: password,
-         };
+        };
+        
+        axios.post("", userObj)
+        .then(res => {
+            // 아이디 또는 비번 일치 x
+            if (res.status === 403){
+                console.log('로그인 실패');
+                alert('아이디 또는 비밀번호가 맞지 않습니다.');
+                window.location.href = "/login";
+            }
+            // 로그인 성공
+            else if (res.status === 200) {
+                sessionStorage.setItem("access_token", res.data.token);
+                window.location.href="/main"; // href
+            }
+        })
+        .catch(err => {
+            alert("네트워크가 불안정합니다.");
+            console.log(err);
+        });
     }
 
     return(

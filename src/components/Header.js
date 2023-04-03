@@ -66,7 +66,7 @@ function Header() {
         sx={{
           display: "grid",
           alignItems: "center",
-          width: "100%",
+          width: "100vw",
           borderRadius: 1,
           color: "text.secondary",
           "& svg": {
@@ -84,7 +84,6 @@ function Header() {
               style={{
                 height: "40px",
                 width: "fullWidth",
-                position: "fixed",
               }}
             >
               <Link href="/">
@@ -133,6 +132,7 @@ function Header() {
           <Grid item xs={2}>
             <Link href="/login">
             <Button
+              className="loginBtn"
               variant="contained"
               style={{
                 float: "right",
