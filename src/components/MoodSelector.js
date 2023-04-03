@@ -7,7 +7,7 @@ export default function MoodSelector({ step, setMoodData }) {
   const [mood2, setMood2] = useState('');
 
 
-  const [isCheck, setCheck] = useState(false);
+  // const [isCheck, setCheck] = useState(false);
 
   const detail = [
     {
@@ -66,17 +66,18 @@ export default function MoodSelector({ step, setMoodData }) {
     if (newMood !== null) {
       setMood(newMood);
     }
-    console.log(mood, mood2);
+    console.log("자식컴포넌트 무드데이터", mood);
   };
 
-  const handleClick = (mood) => {
-    setMoodData((prevMoodData) => [...prevMoodData, mood]);
+  const handleClick = (e, mood) => {
+    e.preventDefault();
+    setMoodData(prevMoodData => [...prevMoodData, mood]);
   };
 
-  const detailMoodChange = (event, detailMood) => {
-    setMood2(detailMood);
-    console.log("Mood 2 :", mood2);
-  }
+  // const detailMoodChange = (event, detailMood) => {
+  //   setMood2(detailMood);
+  //   console.log("Mood 2 :", mood2);
+  // }
 
   return (
     <>
@@ -92,7 +93,7 @@ export default function MoodSelector({ step, setMoodData }) {
           fullWidth
           required
           onChange={moodChange}
-          onClick={handleClick}
+          onClick={(e) => handleClick(e, mood)}
           aria-label="Platform"
         >
           {step === 0 ? [

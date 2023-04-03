@@ -19,6 +19,12 @@ export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [moodData, setMoodData] = React.useState([]);
+  const [realMoodData, setRealMoodData] = React.useState({});
+
+  // console.log("부모컴포넌트 무드데이터:" , moodData);
+  // console.log("진짜 무드데이터:", realMoodData);
+  console.log(moodData[activeStep], activeStep);
+
 
   // const handleData = (moodData) => {
   //   setMoodData(moodData);
@@ -40,7 +46,12 @@ export default function HorizontalLinearStepper() {
       newSkipped = new Set(newSkipped.values());
       newSkipped.delete(activeStep);
     }
-    console.log("부모컴포넌트 무드데이터:", moodData);
+    // console.log("부모컴포넌트 무드데이터:", moodData);
+    // 자식컴포넌트의 moodData를 realmooddata에 넣음
+    // const newData = [...moodData];
+    // newData[1] = moodData;
+    // setRealMoodData(newData);
+
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
