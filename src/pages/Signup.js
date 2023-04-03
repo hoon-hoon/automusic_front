@@ -1,5 +1,5 @@
-import { Container } from '@mui/system';
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { call, signup } from '../service/ApiService';
 
 function Signup() {
@@ -9,10 +9,9 @@ function Signup() {
     const [phonenumber, setPhonenumber] = useState('');
     const [nickname, setNickname] = useState('');
 
-
     useEffect(() => {
     },
-        []);
+    []);
 
     const onIdHandler = (event) => {
         setId(event.currentTarget.value)
@@ -29,31 +28,65 @@ function Signup() {
     const onNicknameHandler = (event) => {
         setNickname(event.currentTarget.value)
     }
+    const joinData = {
+        userId: "test",
+        pw: "PWtest",
+        nickname: "hooon"
+    };
+
+    const onhandlePost = async (data) => {
+        call("/signUp", "POST", data)
+        .then((response) => {
+            console.log(response);
+        })
+
+    }
+
 
     const onClickSignup = (event) => {
         // 기본 클릭 동작 방지
         event.preventDefault()
-
+        onhandlePost(joinData);
         let userObj = {
             id: id,
             pw: password,
             name: name,
-            phone: phonenumber,
             nickname: nickname
-        };
+         };
+
+        //  axios.post("", userObj)
+        // .then(res => {
+        //     // 회원가입 실패
+        //     if (res.status === 403){
+        //         console.log('회원가입 실패');
+        //         alert('회원가입을 실패했습니다.');
+        //         window.location.href="/signup";
+        //     }
+        //     // 회원가입 성공
+        //     else if (res.status === 200) {
+        //         console.log('회원가입 성공');
+        //         window.location.href="/login";
+        //     }
+        //     console.log(res);
+        //     window.location.href="/login";
+        // })
+        // .catch(err => {
+        //     alert("네트워크가 불안정합니다.");
+        //     console.log(err);
+        //     window.location.href="/signup";
+        // });
     }
 
-    return (
+    return(
         <div class="signup">
             <h2 class="title">SIGNUP</h2>
             <hr></hr>
-            <Container style={{display:"flex", flexDirection:"column", justifyContent:"center"}}>
-            <div style={{margin:"10px"}}>
+            <div>
                 <label htmlFor='id'>아이디</label>
                 <input maxLength="10" class="check_input" type='text' name='id' value={id} onChange={onIdHandler} />
                 <button class="btn">중복 확인</button>
             </div>
-            <div style={{margin:"10px"}}>
+            <div>
                 <label htmlFor='password'>비밀번호</label>
                 <input maxLength="20" type='password' name='password' value={password} onChange={onPasswordHandler} />
             </div>
@@ -68,7 +101,6 @@ function Signup() {
             <div>
                 <button class="signup_button" type='button' onClick={onClickSignup}>완료</button>
             </div>
-            </Container>
         </div>
     )
 }
