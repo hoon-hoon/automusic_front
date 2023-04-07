@@ -15,6 +15,8 @@ const steps = [
   "박자 설정하기",
 ];
 
+
+
 export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());

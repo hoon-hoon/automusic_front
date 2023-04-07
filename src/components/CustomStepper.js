@@ -5,7 +5,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { FormControl, FormControlLabel, Radio, RadioGroup, Slider } from "@mui/material";
 
 const steps = [
     "음악 분위기 설정 1",
@@ -14,6 +14,21 @@ const steps = [
     "bpm 설정하기",
     "박자 설정하기",
 ];
+
+const getStepContent = (step) => {
+    switch (step) {
+        case 0:
+            return '어떤 분위기의 음악을 원하시나요?';
+        case 1:
+            return '음악의 상세 분위기를 골라주세요.';
+        case 2:
+            return "4개의 악기를 선택해주세요.";
+        case 3:
+            return "bpm을 정해주세요.";
+        case 4:
+            return "박자를 골라주세요.";
+    }
+};
 
 const detail = [
     {
@@ -46,10 +61,17 @@ const detail = [
 export default function CustonStepper() {
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
+    const [musicData, setMusicData] = React.useState([""]);
+    const [bpm, setBpm] = React.useState(50);
+
+    // console.log(musicData);
 
     const [selectedValues, setSelectedValues] = React.useState([]);
 
-    console.log(activeStep);
+
+    const onBpmChanged = (event, newValue) => {
+      setBpm(newValue);
+    };
 
     const isStepOptional = (step) => {
         return step === 0, 1;
@@ -65,8 +87,30 @@ export default function CustonStepper() {
             newSkipped = new Set(newSkipped.values());
             newSkipped.delete(activeStep);
         }
+        let value
+        if (activeStep === 3) {
+            value = bpm;
+        } else {
+            value = document.querySelector('input[name="radio-buttons-group"]:checked').value;
+        }
+
+        setMusicData(prev => {
+            const newData = [...prev];
+            newData[activeStep] = value;
+            if (activeStep === 0) {
+                newData[activeStep] = value;
+            }
+            return newData;
+        });
+
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setSkipped(newSkipped);
+
+        // radio값 배열에 넣음
+        const newSelectedValues = [...selectedValues];
+        newSelectedValues[activeStep] = musicData;
+        setSelectedValues(newSelectedValues);
+        console.log("들어간 무드데이터:", musicData);
 
     };
 
@@ -88,8 +132,17 @@ export default function CustonStepper() {
     };
 
     const handleReset = () => {
+        console.log(musicData);
+        setMusicData([]);
         setActiveStep(0);
     };
+
+    const handleRadioChange = (event) => {
+        const newSelectedValues = [...selectedValues];
+        newSelectedValues[activeStep] = event.target.value;
+        setSelectedValues(newSelectedValues);
+    };
+
 
     return (
         <Box sx={{ width: "100%" }}>
@@ -125,14 +178,54 @@ export default function CustonStepper() {
 
                     </Typography>
                     {/* Content 란 */}
+                    <Typography style={{ margin: "30px" }}>{getStepContent(activeStep)}</Typography>
+
                     <FormControl>
+
                         <RadioGroup
                             aria-labelledby="demo-radio-buttons-group-label"
-                            defaultValue="female"
+                            defaultValue="mood"
                             name="radio-buttons-group"
+                            onChange={(event) => handleRadioChange(event)}
                         >
-                            <FormControlLabel value="0" control={<Radio />} label="긍정적인" />
-                            <FormControlLabel value="1" control={<Radio />} label="부정적인" />
+
+                            {activeStep === 0 ? [
+                                <>
+                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
+                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
+                                </>
+                            ] : activeStep === 1 ? [
+                                <>
+                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
+                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
+                                </>
+                            ] : activeStep === 2 ? [
+                                <>
+                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
+                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
+                                </>
+                            ] : activeStep === 3 ? [
+                                <>
+                                    <Box sx={{ width: 300 }}>
+                                        <Slider
+                                            aria-label="bpm"
+                                            defaultValue={50}
+                                            onChange={onBpmChanged}
+                                            valueLabelDisplay="auto"
+                                            step={10}
+                                            marks
+                                            min={50}
+                                            max={100}
+                                         />
+                                    </Box>
+                                </>
+                            ] : activeStep === 4 ? [
+                                <>
+                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
+                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
+                                </>
+                            ] : null
+                            }
 
                         </RadioGroup>
                     </FormControl>
@@ -153,9 +246,7 @@ export default function CustonStepper() {
                             </Button>
                         )}
                         <Button onClick={handleNext}>
-
                             {activeStep === steps.length - 1 ? "Finish" : "Next"}
-
                         </Button>
                     </Box>
                 </React.Fragment>

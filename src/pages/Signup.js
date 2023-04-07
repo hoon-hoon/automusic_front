@@ -47,34 +47,6 @@ function Signup() {
         // 기본 클릭 동작 방지
         event.preventDefault()
         onhandlePost(joinData);
-        let userObj = {
-            id: id,
-            pw: password,
-            name: name,
-            nickname: nickname
-         };
-
-        //  axios.post("", userObj)
-        // .then(res => {
-        //     // 회원가입 실패
-        //     if (res.status === 403){
-        //         console.log('회원가입 실패');
-        //         alert('회원가입을 실패했습니다.');
-        //         window.location.href="/signup";
-        //     }
-        //     // 회원가입 성공
-        //     else if (res.status === 200) {
-        //         console.log('회원가입 성공');
-        //         window.location.href="/login";
-        //     }
-        //     console.log(res);
-        //     window.location.href="/login";
-        // })
-        // .catch(err => {
-        //     alert("네트워크가 불안정합니다.");
-        //     console.log(err);
-        //     window.location.href="/signup";
-        // });
     }
 
     return(
