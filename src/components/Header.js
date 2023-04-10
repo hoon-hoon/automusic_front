@@ -130,7 +130,7 @@ function Header() {
             <Divider orientation="vertical"/>
           </Grid>
           <Grid item xs={2}>
-            <Link href="/login">
+            <Link href="/Login">
             <Button
               className="loginBtn"
               variant="contained"

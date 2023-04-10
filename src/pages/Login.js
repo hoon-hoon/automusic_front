@@ -1,58 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { call, signin } from '../service/ApiService';
+import * as LoginService from "../service/LoginService.js";
 
-function Login() {
-    const [id, setId] = useState('')
+export const Login = () => {
+    const [userId, setUserId] = useState('')
     const [password, setPassword] = useState('')
-
-    useEffect(() => {
-    },
-    []);
-
-    const onIdHandler = (event) => {
-        setId(event.currentTarget.value)
-    }
-    const onPasswordHandler = (event) => {
-        setPassword(event.currentTarget.value)
-    }
-    const joinData = {
-        userId: "yerim",
-        pw: "1215",
-        nickname: "예림"
-    };
-    
-    const onhandlePost = async (data) => {
-        signin(data)
-        .then((response) => {
-            console.log(response);
-            
-        })
-    }
-
-    const onClickLogin = (event) => {
-        // 기본 클릭 동작 방지
-        event.preventDefault()
-        onhandlePost(joinData);
-    }
 
     return(
         <div className="login">
             <h1 className="title">LOGIN</h1>
             <div>
-                <input placeholder='아이디' type='text' name='id' value={id} onChange={onIdHandler} />
+                <input placeholder='아이디' type='text' name='id' value={userId}
+                       onChange={(e)=>{LoginService.userIdChanged(e, setUserId)}} />
             </div>
             <div>
-                <input placeholder='비밀번호' type='password' name='password' value={password} onChange={onPasswordHandler} />
+                <input placeholder='비밀번호' type='password' name='password' value={password}
+                       onChange={(e)=>{LoginService.userPasswordChanged(e, setPassword)}} />
             </div>
             <div>
-                <button type='button' onClick={onClickLogin}>로그인</button>
+                <button type='button' onClick={(e)=>{LoginService.loginButtonClicked(e, userId, password)}}>로그인</button>
+            </div>
         </div>
         
         <div>
-            <p><a>비밀번호 찾기</a> | <a>아이디 찾기</a> | <a href="/Signup">회원가입</a></p>
+            <p><a>비밀번호 찾기</a> | <a>아이디 찾기</a> | <a href="/SignUp">회원가입</a></p>
         </div>
     </div>
     )
 }
-
-export default Login;
