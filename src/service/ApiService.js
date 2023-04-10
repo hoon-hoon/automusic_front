@@ -37,18 +37,19 @@ export function call(api, method, request) {
 
 
 export function signin(member) {
-    return call("/user/login", "POST", member)
+    return call("/signIn", "GET", member)
         .then((response) => {
             if (!response.error ) {
-                localStorage.setItem("USER", JSON.stringify(response.data));
+                // localStorage.setItem("USER", response.data);
                 window.alert("로그인 성공")
-                window.location.href = "/"
+                window.location.href = "/main"
             } else {
                 window.alert("로그인 실패")
             }
         })
         .catch((error) => {
             window.alert(error.error);
+            console.log("로그인 에러");
         });
 }
 

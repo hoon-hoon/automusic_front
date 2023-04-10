@@ -28,7 +28,7 @@ function AppRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginLayout />}>
-          <Route path="login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
         </Route>
         <Route path="/" element={<BasicLayout />}>
