@@ -6,6 +6,7 @@ export const Login = () => {
     const [password, setPassword] = useState('')
 
     return(
+    <div>
         <div className="login">
             <h1 className="title">LOGIN</h1>
             <div>
@@ -27,3 +28,5 @@ export const Login = () => {
     </div>
     )
 }
+
+export default Login;
