@@ -72,13 +72,11 @@
 }
 
 .input-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* 추가 */
-  width: 250px; /* 추가 */
+  /* display: flex; */
+  /* align-items: center; */
+  margin-left: 75px;
 }
 
 .input-container > * {
-  margin-right: 10px;
   flex-grow: 1; /* 추가 */
 }
