@@ -7,6 +7,7 @@ export const Login = () => {
     const [password, setPassword] = useState('')
 
     return(
+    <div>
         <div className="login">
             <div className='login-container'>
                 <h1 className="title">LOGIN</h1>
@@ -31,3 +32,5 @@ export const Login = () => {
         </div>
     )
 }
+
+export default Login;
