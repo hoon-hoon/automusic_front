@@ -8,7 +8,7 @@ export const SignUp = () => {
     const [passwordError, setPasswordError] = useState('');
     const [nickname, setNickname] = useState('');
     const [nicknameError, setNicknameError] = useState('');
-
+    // pull request test
     return (
         <div className="signup">
             <div className="signup-container">
