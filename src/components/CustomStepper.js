@@ -68,6 +68,7 @@ export default function CustonStepper() {
 
     const [selectedValues, setSelectedValues] = React.useState([]);
 
+    let lastData = musicData;
 
     const onBpmChanged = (event, newValue) => {
       setBpm(newValue);
@@ -129,6 +130,9 @@ export default function CustonStepper() {
             newSkipped.add(activeStep);
             return newSkipped;
         });
+
+        const newSelectedValues = [...selectedValues];
+        newSelectedValues[activeStep] = ["skip"];
     };
 
     const handleReset = () => {
@@ -142,6 +146,10 @@ export default function CustonStepper() {
         newSelectedValues[activeStep] = event.target.value;
         setSelectedValues(newSelectedValues);
     };
+
+    const onhandlePost = async () => {
+        console.log();
+    }
 
 
     return (
@@ -170,6 +178,8 @@ export default function CustonStepper() {
                     <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                         <Box sx={{ flex: "1 1 auto" }} />
                         <Button onClick={handleReset}>Reset</Button>
+                        <Button>Create</Button>
+
                     </Box>
                 </React.Fragment>
             ) : (
@@ -194,12 +204,17 @@ export default function CustonStepper() {
                                     <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
                                     <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
                                 </>
-                            ] : activeStep === 1 ? [
+                            ] : activeStep === 1 && lastData[0] === '0' ? [
                                 <>
                                     <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
                                     <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
                                 </>
-                            ] : activeStep === 2 ? [
+                            ] : activeStep === 1 && lastData[0] === '1' ? [
+                                <>
+                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content3} />
+                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content4} />
+                                </>
+                            ] :activeStep === 2 ? [
                                 <>
                                     <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
                                     <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />

@@ -8,6 +8,7 @@ import {Login} from "./pages/Login";
 import Main from "./pages/Main";
 import {SignUp} from "./pages/SignUp";
 
+
 function LoginLayout() {
   return <Outlet />;
 }
