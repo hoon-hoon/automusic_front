@@ -1,9 +1,9 @@
-import { Container } from "@mui/material";
 import React from "react";
 import { CenteredOverlayForm } from "../components/CenteredOverlayForm";
 
 function Main() {
-    return(<>
+
+    return (<>
         <CenteredOverlayForm backgroundColor={'#F9AF4F'}>
             메인페이지 입니다...
         </CenteredOverlayForm>

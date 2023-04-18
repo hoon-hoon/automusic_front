@@ -1,0 +1,10 @@
+.FormControl {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+#demo-simple-select {
+    margin-right: 30px;
+}

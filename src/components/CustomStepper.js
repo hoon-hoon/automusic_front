@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./CustomStepper.css";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -6,6 +7,7 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { FormControl, FormControlLabel, Radio, RadioGroup, Slider } from "@mui/material";
+import { InstrumentForm } from "./InstrumentForm";
 
 const steps = [
     "음악 분위기 설정 1",
@@ -63,6 +65,7 @@ export default function CustonStepper() {
     const [skipped, setSkipped] = React.useState(new Set());
     const [musicData, setMusicData] = React.useState([""]);
     const [bpm, setBpm] = React.useState(50);
+    const [inst, setInst] = React.useState('');
 
     // console.log(musicData);
 
@@ -91,7 +94,9 @@ export default function CustonStepper() {
         let value
         if (activeStep === 3) {
             value = bpm;
-        } else {
+        } else if (activeStep === 2) {
+            value = inst;
+        } else  {
             value = document.querySelector('input[name="radio-buttons-group"]:checked').value;
         }
 
@@ -151,6 +156,10 @@ export default function CustonStepper() {
         console.log();
     }
 
+    const instChange = (e) => {
+        setInst(e.target.value);
+        console.log(e.target.value);
+    }
 
     return (
         <Box sx={{ width: "100%" }}>
@@ -216,8 +225,7 @@ export default function CustonStepper() {
                                 </>
                             ] :activeStep === 2 ? [
                                 <>
-                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
-                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
+<InstrumentForm instChange={(e) => instChange(e)} />
                                 </>
                             ] : activeStep === 3 ? [
                                 <>
