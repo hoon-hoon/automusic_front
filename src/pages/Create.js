@@ -1,7 +1,6 @@
 import { Paper, Box, Container } from "@mui/material";
 import React from "react";
 import { CenteredOverlayForm } from "../components/CenteredOverlayForm";
-import HorizontalLinearStepper from "../components/CreateStepper";
 import CustomStepper from "../components/CustomStepper";
 
 
