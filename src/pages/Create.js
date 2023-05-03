@@ -1,4 +1,5 @@
 import { Paper, Box, Container } from "@mui/material";
+import "./Create.css";
 import React from "react";
 import { CenteredOverlayForm } from "../components/CenteredOverlayForm";
 import CustomStepper from "../components/CustomStepper";
@@ -6,9 +7,8 @@ import CustomStepper from "../components/CustomStepper";
 
 function Create() {
     return(<>
-    <CenteredOverlayForm>
-        <Container style={{backgroundColor : "beige" ,alignItems: "center", justifyContent: "center", height: "70vh", padding: "150px", borderRadius: "0 0 50px 50px"}}>
-        {/* <HorizontalLinearStepper /> */}
+    <CenteredOverlayForm className="Form">
+        <Container className="Container">
         <CustomStepper />
         </Container>
     </CenteredOverlayForm>

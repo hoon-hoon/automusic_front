@@ -61,7 +61,7 @@ function Header() {
   const currentPathname = window.location.pathname;
 
   return (
-    <div id="header">
+    <div className="header">
       <Box
         sx={{
           display: "grid",
@@ -103,6 +103,7 @@ function Header() {
               aria-label="full width tabs example"
               variant="fullWidth"
               indicatorColor="secondary"
+              className="StyledTab"
             >
               <StyledTab
                 label="HOME"
@@ -132,16 +133,8 @@ function Header() {
           <Grid item xs={2}>
             <Link href="/Login">
             <Button
-              className="loginBtn"
+              id="loginBtn"
               variant="contained"
-              style={{
-                float: "right",
-                backgroundColor: "#bf1650",
-                color: "white",
-                fontWeight: "bold",
-                borderRadius: 20,
-                marginRight: "3vw",
-              }}
             >
               LOGIN
             </Button>

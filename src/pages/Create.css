@@ -1,0 +1,14 @@
+.Form {
+    display: flex;
+    align-items: center;    
+}
+
+
+.Container {
+    background-color : beige;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    padding: 150px;
+    border-radius: 0 0 50px 50px;
+}

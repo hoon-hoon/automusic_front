@@ -1,4 +1,4 @@
-#header {
+.header {
     background-color: #EEE5E0;
     max-width: -webkit-fill-available;
     height: 48px;
@@ -8,21 +8,33 @@
     padding: 10px;
 }
 
+#loginBtn {
+    float: right;
+    background-color: #bf1650;
+    color: white;
+    font-weight: bold;
+    border-radius: 20;
+    margin-right: 3vw;
+}
+
 
 
 @media screen and (max-width: 895px) {
-    #header {
+    .header {
+        display: flex;
         flex-direction: column;
         align-items: flex-start;
-        background-color: white;
+        background-color: red;
     }
     .StyledTab {
+        display: flex;
         flex-direction: column;
         align-items: center;
         width: 100%;
         background-color: black;
     }
-    .loginBtn {
+    #loginBtn {
         background-color: black;
+        color: black;
     }
 }

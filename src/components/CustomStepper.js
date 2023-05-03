@@ -10,11 +10,11 @@ import { FormControl, FormControlLabel, Radio, RadioGroup, Slider } from "@mui/m
 import { InstrumentForm } from "./InstrumentForm";
 
 const steps = [
-    "음악 분위기 설정 1",
-    "음악 분위기 설정 2",
+    "음악 분위기 선택",
+    "음악 상세 분위기 선택",
     "악기 선택",
-    "bpm 설정하기",
-    "박자 설정하기",
+    "bpm 설정",
+    "박자 설정",
 ];
 
 const getStepContent = (step) => {
@@ -65,7 +65,7 @@ export default function CustonStepper() {
     const [skipped, setSkipped] = React.useState(new Set());
     const [musicData, setMusicData] = React.useState([""]);
     const [bpm, setBpm] = React.useState(50);
-    const [inst, setInst] = React.useState('');
+    const [inst, setInst] = React.useState('0');
 
     // console.log(musicData);
 
@@ -74,7 +74,7 @@ export default function CustonStepper() {
     let lastData = musicData;
 
     const onBpmChanged = (event, newValue) => {
-      setBpm(newValue);
+        setBpm(newValue);
     };
 
     const isStepOptional = (step) => {
@@ -96,184 +96,188 @@ export default function CustonStepper() {
             value = bpm;
         } else if (activeStep === 2) {
             value = inst;
-        } else  {
+        } else {
             value = document.querySelector('input[name="radio-buttons-group"]:checked').value;
         }
 
-        setMusicData(prev => {
-            const newData = [...prev];
+    setMusicData(prev => {
+        const newData = [...prev];
+        newData[activeStep] = value;
+        if (activeStep === 0) {
             newData[activeStep] = value;
-            if (activeStep === 0) {
-                newData[activeStep] = value;
-            }
-            return newData;
-        });
-
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setSkipped(newSkipped);
-
-        // radio값 배열에 넣음
-        const newSelectedValues = [...selectedValues];
-        newSelectedValues[activeStep] = musicData;
-        setSelectedValues(newSelectedValues);
-        console.log("들어간 무드데이터:", musicData);
-
-    };
-
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
-
-    const handleSkip = () => {
-        if (!isStepOptional(activeStep)) {
-            throw new Error("You can't skip a step that isn't optional.");
         }
+        return newData;
+    });
 
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setSkipped((prevSkipped) => {
-            const newSkipped = new Set(prevSkipped.values());
-            newSkipped.add(activeStep);
-            return newSkipped;
-        });
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSkipped(newSkipped);
 
-        const newSelectedValues = [...selectedValues];
-        newSelectedValues[activeStep] = ["skip"];
-    };
+    // radio값 배열에 넣음
+    const newSelectedValues = [...selectedValues];
+    newSelectedValues[activeStep] = musicData;
+    setSelectedValues(newSelectedValues);
+    console.log("들어간 무드데이터:", musicData);
 
-    const handleReset = () => {
-        console.log(musicData);
-        setMusicData([]);
-        setActiveStep(0);
-    };
+};
 
-    const handleRadioChange = (event) => {
-        const newSelectedValues = [...selectedValues];
-        newSelectedValues[activeStep] = event.target.value;
-        setSelectedValues(newSelectedValues);
-    };
+const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+};
 
-    const onhandlePost = async () => {
-        console.log();
+const handleSkip = () => {
+    if (!isStepOptional(activeStep)) {
+        throw new Error("You can't skip a step that isn't optional.");
     }
 
-    const instChange = (e) => {
-        setInst(e.target.value);
-        console.log(e.target.value);
-    }
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSkipped((prevSkipped) => {
+        const newSkipped = new Set(prevSkipped.values());
+        newSkipped.add(activeStep);
+        return newSkipped;
+    });
 
-    return (
-        <Box sx={{ width: "100%" }}>
-            <Stepper activeStep={activeStep}>
-                {steps.map((label, index) => {
-                    const stepProps = {};
-                    const labelProps = {};
-                    if (isStepOptional(index)) {
-                        labelProps.optional = (
-                            <Typography variant="caption"></Typography>
-                        );
-                    }
-                    return (
-                        <Step key={label} {...stepProps}>
-                            <StepLabel {...labelProps}>{label}</StepLabel>
-                        </Step>
+    const newSelectedValues = [...selectedValues];
+    newSelectedValues[activeStep] = ["skip"];
+};
+
+const handleReset = () => {
+    console.log(musicData);
+    setMusicData([]);
+    setActiveStep(0);
+};
+
+const handleRadioChange = (event) => {
+    const newSelectedValues = [...selectedValues];
+    newSelectedValues[activeStep] = event.target.value;
+    setSelectedValues(newSelectedValues);
+};
+
+const onhandlePost = async () => {
+    console.log();
+}
+
+const instChange = (e) => {
+    setInst(e);
+    console.log(e);
+}
+
+const MusicCreate = () => {
+
+}
+
+return (
+    <Box sx={{ width: "100%" }}>
+        <Stepper activeStep={activeStep}>
+            {steps.map((label, index) => {
+                const stepProps = {};
+                const labelProps = {};
+                if (isStepOptional(index)) {
+                    labelProps.optional = (
+                        <Typography variant="caption"></Typography>
                     );
-                })}
-            </Stepper>
-            {activeStep === steps.length ? (
-                <React.Fragment>
-                    <Typography sx={{ mt: 2, mb: 1 }}>
-                        모든 과정이 끝났습니다! <br /> Finish를 누르면 노래가 생성됩니다.
-                    </Typography>
-                    <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                        <Box sx={{ flex: "1 1 auto" }} />
-                        <Button onClick={handleReset}>Reset</Button>
-                        <Button>Create</Button>
+                }
+                return (
+                    <Step key={label} {...stepProps}>
+                        <StepLabel {...labelProps}>{label}</StepLabel>
+                    </Step>
+                );
+            })}
+        </Stepper>
+        {activeStep === steps.length ? (
+            <React.Fragment>
+                <Typography sx={{ mt: 2, mb: 1 }}>
+                    모든 과정이 끝났습니다! <br /> Create를 누르면 노래가 생성됩니다.
+                </Typography>
+                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                    <Box sx={{ flex: "1 1 auto" }} />
+                    <Button onClick={handleReset}>Reset</Button>
+                    <Button onClick={MusicCreate}>Create</Button>
 
-                    </Box>
-                </React.Fragment>
-            ) : (
-                <React.Fragment>
-                    <Typography sx={{ mt: 2, mb: 1 }}>
+                </Box>
+            </React.Fragment>
+        ) : (
+            <React.Fragment>
+                <Typography sx={{ mt: 2, mb: 1 }}>
 
-                    </Typography>
-                    {/* Content 란 */}
-                    <Typography style={{ margin: "30px" }}>{getStepContent(activeStep)}</Typography>
+                </Typography>
+                {/* Content 란 */}
+                <Typography style={{ margin: "30px" }}>{getStepContent(activeStep)}</Typography>
 
-                    <FormControl>
+                <FormControl>
 
-                        <RadioGroup
-                            aria-labelledby="demo-radio-buttons-group-label"
-                            defaultValue="mood"
-                            name="radio-buttons-group"
-                            onChange={(event) => handleRadioChange(event)}
-                        >
+                    <RadioGroup
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        defaultValue="mood"
+                        name="radio-buttons-group"
+                        onChange={(event) => handleRadioChange(event)}
+                    >
 
-                            {activeStep === 0 ? [
-                                <>
-                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
-                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
-                                </>
-                            ] : activeStep === 1 && lastData[0] === '0' ? [
-                                <>
-                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
-                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
-                                </>
-                            ] : activeStep === 1 && lastData[0] === '1' ? [
-                                <>
-                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content3} />
-                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content4} />
-                                </>
-                            ] :activeStep === 2 ? [
-                                <>
-<InstrumentForm instChange={(e) => instChange(e)} />
-                                </>
-                            ] : activeStep === 3 ? [
-                                <>
-                                    <Box sx={{ width: 300 }}>
-                                        <Slider
-                                            aria-label="bpm"
-                                            defaultValue={50}
-                                            onChange={onBpmChanged}
-                                            valueLabelDisplay="auto"
-                                            step={10}
-                                            marks
-                                            min={50}
-                                            max={100}
-                                         />
-                                    </Box>
-                                </>
-                            ] : activeStep === 4 ? [
-                                <>
-                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
-                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
-                                </>
-                            ] : null
-                            }
+                        {activeStep === 0 ? [
+                            <>
+                                <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
+                                <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
+                            </>
+                        ] : activeStep === 1 && lastData[0] === '0' ? [
+                            <>
+                                <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
+                                <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
+                            </>
+                        ] : activeStep === 1 && lastData[0] === '1' ? [
+                            <>
+                                <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content3} />
+                                <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content4} />
+                            </>
+                        ] : activeStep === 2 ? [
+                            <>
+                                <InstrumentForm onChange = {instChange} />
+                            </>
+                        ] : activeStep === 3 ? [
+                            <>
+                                <Box sx={{ width: 300 }}>
+                                    <Slider
+                                        aria-label="bpm"
+                                        defaultValue={50}
+                                        onChange={onBpmChanged}
+                                        valueLabelDisplay="auto"
+                                        step={10}
+                                        marks
+                                        min={50}
+                                        max={100}
+                                    />
+                                </Box>
+                            </>
+                        ] : activeStep === 4 ? [
+                            <>
+                                <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
+                                <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
+                            </>
+                        ] : null
+                        }
 
-                        </RadioGroup>
-                    </FormControl>
+                    </RadioGroup>
+                </FormControl>
 
-                    <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                        <Button
-                            color="inherit"
-                            disabled={activeStep === 0}
-                            onClick={handleBack}
-                            sx={{ mr: 1 }}
-                        >
-                            Back
+                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                    <Button
+                        color="inherit"
+                        disabled={activeStep === 0}
+                        onClick={handleBack}
+                        sx={{ mr: 1 }}
+                    >
+                        Back
+                    </Button>
+                    <Box sx={{ flex: "1 1 auto" }} />
+                    {isStepOptional(activeStep) && (
+                        <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+                            Skip
                         </Button>
-                        <Box sx={{ flex: "1 1 auto" }} />
-                        {isStepOptional(activeStep) && (
-                            <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                                Skip
-                            </Button>
-                        )}
-                        <Button onClick={handleNext}>
-                            {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                        </Button>
-                    </Box>
-                </React.Fragment>
-            )}
-        </Box>
-    );
+                    )}
+                    <Button onClick={handleNext}>
+                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                    </Button>
+                </Box>
+            </React.Fragment>
+        )}
+    </Box>
+);
 }

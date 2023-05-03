@@ -1,68 +1,88 @@
-import { Accordion, Container, FormControl, MenuItem, Select } from "@mui/material";
+import { FormControl, MenuItem, Select, Box } from "@mui/material";
 import "./InstrumentForm.css";
 import React, { useState } from "react";
-import instrument from "../asset/instrument.json"
+import instrument from "../asset/instrument.json";
 
 export const InstrumentForm = ({ onChange }) => {
-    // console.log(instrument[5].item);
+  const [formValues, setFormValues] = useState({
+    inst1: "",
+    inst2: "",
+    inst3: "",
+    inst4: "",
+  });
 
-    const [inst1, setInst1] = useState('');
-    const [inst2, setInst2] = useState('');
-    const [inst3, setInst3] = useState('');
-    const [inst4, setInst4] = useState('');
+  onChange(formValues);
 
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  };
 
-    const handleChange = (e) => {
-        setInst1(e.target.value);
-        onChange(e.target.value);
-        console.log(inst1);
-    }
-
-    const instData = instrument.map((item, index) => {
-        return (
-            <MenuItem key={index} value={item.id}>
-                {item.item}
-            </MenuItem>
-        )
-    })
+  const instData = instrument.map((item, index) => {
     return (
-        <FormControl className="FormControl">
-            <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={inst1}
-                label="Instrument"
-                onChange={handleChange}
-            >
-                {instData}
-            </Select>
-            <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={inst2}
-                label="Instrument"
-                onChange={handleChange}
-            >
-                {instData}
-            </Select>
-            <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={inst3}
-                label="Instrument"
-                onChange={handleChange}
-            >
-                {instData}
-            </Select>
-            <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={inst4}
-                label="Instrument"
-                onChange={handleChange}
-            >
-                {instData}
-            </Select>
-        </FormControl>
-    )
-}
+      <MenuItem key={index} value={item.id}>
+        {item.item}
+      </MenuItem>
+    );
+  });
+
+  return (
+    <Box>
+      <FormControl className="FormControl">
+        <Select
+          name="inst1"
+          labelId="demo-simple-select-label-1"
+          id="demo-simple-select-1"
+          value={formValues.inst1}
+          label="Instrument 1"
+          onChange={handleFormChange}
+          style={{ width: "100%" }}
+        >
+          {instData}
+        </Select>
+      </FormControl>
+      <FormControl className="FormControl">
+        <Select
+          name="inst2"
+          labelId="demo-simple-select-label-2"
+          id="demo-simple-select-2"
+          value={formValues.inst2}
+          label="Instrument 2"
+          onChange={handleFormChange}
+          style={{ width: "100%" }}
+        >
+          {instData}
+        </Select>
+      </FormControl>
+      <FormControl className="FormControl">
+        <Select
+          name="inst3"
+          labelId="demo-simple-select-label-3"
+          id="demo-simple-select-3"
+          value={formValues.inst3}
+          label="Instrument 3"
+          onChange={handleFormChange}
+          style={{ width: "100%" }}
+        >
+          {instData}
+        </Select>
+      </FormControl>
+      <FormControl className="FormControl">
+        <Select
+          name="inst4"
+          labelId="demo-simple-select-label-4"
+          id="demo-simple-select-4"
+          value={formValues.inst4}
+          label="Instrument 4"
+          onChange={handleFormChange}
+          style={{ width: "100%" }}
+        >
+          {instData}
+        </Select>
+      </FormControl>
+    </Box>
+  );
+};
