@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import * as SignUpService from "../service/SignUpService";
 import "../css/SignUp.css";
-import { Link } from "react-router-dom";
 
 export const SignUp = () => {
     const [id, setId] = useState('');
@@ -13,12 +12,9 @@ export const SignUp = () => {
             <div className="signup-container">
                 <h2 className="title">SIGNUP</h2>
                 <hr></hr>
-                <div>
-                    <div class="input-container">
-                        <input placeholder='아이디' maxLength="10" class="check_input" type='text' name='id' value={id} 
-                            onChange={(e) => { SignUpService.userIdChanged(e, setId) }} style={{ width: '200px' }} />
-                        <button class="btn">중복 확인</button>
-                    </div>
+                <div class="input-container">
+                    <input placeholder='아이디' maxLength="10" class="check_input" type='text' name='id' value={id} 
+                        onChange={(e) => { SignUpService.userIdChanged(e, setId) }} style={{ width: '200px' }} />
                 </div>
                 <div>
                     <input placeholder='비밀번호' maxLength="20" type='password' name='password' value={password}
