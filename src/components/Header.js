@@ -21,7 +21,7 @@ function Header() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    const user = localStorage.getItem("USER");
+    const user = (localStorage.getItem("USER"));
     if (!user) {
       setIsLoggedin(false);
     } else {

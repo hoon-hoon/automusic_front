@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as LoginService from "../service/LoginService.js";
 import "../css/Login.css"
 
@@ -29,7 +29,7 @@ export const Login = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Login;

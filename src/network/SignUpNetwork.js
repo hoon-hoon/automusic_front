@@ -7,6 +7,7 @@ export const signUp = (user) => {
             // 회원가입 성공
             if (response.status === 200) {
                 alert("사용 가능한 아이디입니다.")
+                window.location.href = "/login";
             }
         })
         .catch(err => {
