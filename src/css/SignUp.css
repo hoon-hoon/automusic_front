@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 120vh;
 }
 
 .signup-container {
@@ -61,7 +61,7 @@ label, input {
   margin-left: 15px;
 }
 
-.signup_button {
+.signup-button {
   width: 120px;
   height: 40px;
   font-size: medium;
@@ -71,8 +71,21 @@ label, input {
   background-color: #FFE0B2;
 }
 
-.signup_button:hover {
+.signup-button:hover {
   background-color: #F9AF4F;
+}
+
+.bottom-login-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 90%;
+  margin-top: 15px;
+}
+
+.serve-button {
+  text-decoration: underline;
+  font-style: italic;
 }
 
 .signup-img {

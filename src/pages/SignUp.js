@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 import * as SignUpService from "../service/SignUpService";
 import "../css/SignUp.css";
 
@@ -10,6 +11,9 @@ export const SignUp = () => {
     return (
         <div className="signup">
             <div className="signup-container">
+                <div className='image-container'>
+                    <img className="signup-img" src="/images/signupImg.jpeg" alt="signupImg" loading="lazy" />
+                </div>
                 <div className='form-container'>
                     <p className="title">회원가입</p>
                     <div class="input-container">
@@ -40,12 +44,13 @@ export const SignUp = () => {
                         <hr className='hrSmall'></hr>
                     </div>
                     <div>
-                        <button className="signup_button" type='button'
+                        <button className="signup-button" type='button'
                             onClick={(e) => { SignUpService.signUpButtonClicked(id, password, nickname) }}>회원가입</button>
                     </div>
-                </div>
-                <div className='image-container'>
-                    <img className="signup-img" src="/images/signupImg.jpeg" alt="signupImg" loading="lazy" />
+                    <div className='bottom-login-button'>
+                            <div className="button-text">등록된 회원 정보가 있으신가요?</div>
+                            <div className="serve-button"><Link to="/login">로그인</Link></div>
+                    </div>
                 </div>
             </div>
         </div>
