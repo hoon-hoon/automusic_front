@@ -3,80 +3,67 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #FFD180;
 }
 
 .signup-container {
+  width: 40%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  width: 500px;
-  height: 500px;
-  padding: 50px;
-  border-radius: 20px;
-  background-color: #ff9100;
+  padding: 30px;
+  flex-direction: column;
+  margin-top: 24px;
 }
 
-.signup-container h2 {
-  color: #ffffff;
-  font-size: 2rem;
-  margin-bottom: 20px;
+.title {
+  text-align: center;
+  font-size: xx-large;
+  font-weight: bold;
 }
 
-.signup-container hr {
-  width: 100%;
-  border: none;
-  height: 1px;
-  background-color: #ffffff;
-  margin-bottom: 30px;
+.hrBig {
+  border: 2px solid #000000;
 }
 
-.signup-container div {
-  display: flex;
-  margin-bottom: 20px;
-  align-items: center; /* 추가 */
-}
-
-.signup-container label {
-  color: #BF360c;
-  font-size: 20px;
-  font-weight: 700;
-  margin-right: 10px; /* 수정 */
-}
-
-.signup-container input {
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  height: 20px;
-  width: 250px;
-  margin-right: 10px; /* 추가 */
-}
-
-
-.signup-container .signup_button {
-  border: none;
-  background-color: #ffffff;
-  color: #ff9100;
-  font-size: 1.2rem;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-
-.signup-container .signup-button:hover {
-  background-color: #ff9100;
-  color: #ffffff;
+.hrSmall {
+  border: 1px solid #f0f0f0;
+  margin-bottom: 25px;
 }
 
 .input-container {
-  /* display: flex; */
-  /* align-items: center; */
-  margin-left: 75px;
+  width: 70%;
 }
 
-.input-container > * {
-  flex-grow: 1; /* 추가 */
+input {
+  width: 90%;
+  height: 30px;
+  padding: 0px 10px;
+}
+
+label {
+  font-size: large;
+  font-weight: bold;
+}
+
+label, input {
+  display: flex;
+  justify-content: start;
+  margin-left: 15px;
+}
+
+.signup_button {
+  width: 120px;
+  height: 40px;
+  font-size: medium;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 5px;
+  background-color: #FFE0B2;
+}
+
+.signup_button:hover {
+  background-color: #F9AF4F;
 }

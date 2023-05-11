@@ -10,23 +10,37 @@ export const SignUp = () => {
     return (
         <div className="signup">
             <div className="signup-container">
-                <h2 className="title">SIGNUP</h2>
-                <hr></hr>
+                <p className="title">회원가입</p>
                 <div class="input-container">
-                    <input placeholder='아이디' maxLength="10" class="check_input" type='text' name='id' value={id} 
-                        onChange={(e) => { SignUpService.userIdChanged(e, setId) }} style={{ width: '200px' }} />
+                    <label htmlFor='id'>아이디</label>
+                    <hr className='hrBig'></hr>
+                    <input class="id" type='text' name='id' id="id" value={id} 
+                        onChange={(e) => { SignUpService.userIdChanged(e, setId) }} />
+                    <hr className='hrSmall'></hr>
                 </div>
-                <div>
-                    <input placeholder='비밀번호' maxLength="20" type='password' name='password' value={password}
+                <div class="input-container">
+                    <label htmlFor='password'>비밀번호</label>
+                    <hr className='hrBig'></hr>
+                    <input type='password' name='password' id="password" value={password}
                         onChange={(e) => { SignUpService.passwordChanged(e, setPassword) }} />
+                    <hr className='hrSmall'></hr>
                 </div>
-                <div>
-                    <input placeholder='닉네임' type='text' name='nickname' value={nickname}
+                <div class="input-container">
+                    <label htmlFor='passwordCheck'>비밀번호 확인</label>
+                    <hr className='hrBig'></hr>
+                    <input type='password' name='passwordCheck' id="passwordCheck" />
+                    <hr className='hrSmall'></hr>
+                </div>
+                <div class="input-container">
+                    <label htmlFor='nickname'>닉네임</label>
+                    <hr className='hrBig'></hr>
+                    <input type='text' name='nickname' id="nickname" value={nickname}
                         onChange={(e) => { SignUpService.nickNameChanged(e, setNickname) }} />
+                    <hr className='hrSmall'></hr>
                 </div>
                 <div>
                     <button className="signup_button" type='button'
-                        onClick={(e) => { SignUpService.signUpButtonClicked(id, password, nickname) }}>완료</button>
+                        onClick={(e) => { SignUpService.signUpButtonClicked(id, password, nickname) }}>회원가입</button>
                 </div>
             </div>
         </div>
