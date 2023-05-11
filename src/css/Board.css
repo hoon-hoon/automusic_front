@@ -1,0 +1,18 @@
+body {
+    background-color: beige;
+}
+
+.Wrapper {
+    height: 100vh;
+    display: flex;
+    justify-content: left;
+}
+
+.leftSide {
+    width: 20%;
+    border: 1px solid red;
+}
+.rightSide {
+    width: 70%;
+    border: 1px solid blue;
+}

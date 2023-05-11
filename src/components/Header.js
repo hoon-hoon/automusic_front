@@ -11,10 +11,25 @@ import {
   Tab,
 } from "@mui/material";
 import logo from "../asset/logo.png";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 import { styled } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const [nickname, setNickname] = useState('');
+  const [isLoggedin, setIsLoggedin] = useState(false);
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const user = localStorage.getItem("USER");
+    if (!user) {
+      setIsLoggedin(false);
+    } else {
+      setNickname(user.nickname);
+      setIsLoggedin(true);
+    }
+  }, []);
+
 
   const StyledTabs = styled((props) => (
     <Tabs
@@ -59,6 +74,11 @@ function Header() {
   };
 
   const currentPathname = window.location.pathname;
+
+  const logoutClicked = () => {
+    localStorage.setItem("USER", "");
+    navigate("/");
+  }
 
   return (
     <div className="header">
@@ -128,17 +148,25 @@ function Header() {
             </StyledTabs>
           </Grid>
           <Grid item xs={1}>
-            <Divider orientation="vertical"/>
+            <Divider orientation="vertical" />
           </Grid>
           <Grid item xs={2}>
-            <Link href="/Login">
-            <Button
-              id="loginBtn"
-              variant="contained"
-            >
-              LOGIN
-            </Button>
-            </Link>
+            {isLoggedin ? (<>
+              <Typography>{nickname}님, 안녕하세요!
+              <Button id="logoutBtn" variant="contained" onClick={logoutClicked}>LogOut</Button>
+              </Typography>
+              </>
+            ) : (
+              <Link href="/Login">
+                <Button
+                  id="loginBtn"
+                  variant="contained"
+                >
+                  LOGIN
+                </Button>
+              </Link>
+            )}
+
           </Grid>
         </Grid>
       </Box>

@@ -12,6 +12,7 @@ export const getUser = (userId, password) => {
             if (response.status === 200) {
                 //sessionStorage.setItem("access_token", response.data.token);
                 window.location.href="/"; // href
+                localStorage.setItem("USER", JSON.stringify(response.data));
             }
         })
         .catch(err => {

@@ -6,6 +6,7 @@ import Chart from "./pages/Chart";
 import Create from "./pages/Create";
 import {Login} from "./pages/Login";
 import Main from "./pages/Main";
+import Music from "./pages/Music";
 import {SignUp} from "./pages/SignUp";
 
 
@@ -37,7 +38,7 @@ function AppRouter() {
           <Route path="/board" element={<Board />} />
           <Route path="/chart" element={<Chart />} />
           <Route path="/create" element={<Create />} />
-          
+          <Route path="/music" element={<Music />} />
         </Route>
       </Routes>
     </BrowserRouter>

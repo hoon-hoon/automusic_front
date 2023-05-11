@@ -14,6 +14,7 @@ export const CenteredOverlayForm = ({ children, backgroundColor }) => {
   );
 };
 
+
 const StyledCentralizedContainer = styled(Container)`
   background-color: ${(props) => props.backgroundColor || "#d29f8a"};
   width: 100vw;

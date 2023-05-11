@@ -8,7 +8,7 @@
     padding: 10px;
 }
 
-#loginBtn {
+#loginBtn, #logoutBtn {
     float: right;
     background-color: #bf1650;
     color: white;
@@ -16,6 +16,7 @@
     border-radius: 20;
     margin-right: 3vw;
 }
+
 
 
 

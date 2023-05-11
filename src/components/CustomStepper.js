@@ -8,6 +8,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { FormControl, FormControlLabel, Radio, RadioGroup, Slider } from "@mui/material";
 import { InstrumentForm } from "./InstrumentForm";
+import * as CreateNetwork from "../network/CreateNetwork";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const steps = [
     "음악 분위기 선택",
@@ -66,12 +68,10 @@ export default function CustonStepper() {
     const [musicData, setMusicData] = React.useState([""]);
     const [bpm, setBpm] = React.useState(50);
     const [inst, setInst] = React.useState('0');
-
-    // console.log(musicData);
-
     const [selectedValues, setSelectedValues] = React.useState([]);
 
     let lastData = musicData;
+    const navigate = useNavigate();
 
     const onBpmChanged = (event, newValue) => {
         setBpm(newValue);
@@ -161,8 +161,11 @@ const instChange = (e) => {
     console.log(e);
 }
 
-const MusicCreate = () => {
-
+const MusicCreate = (event) => {
+    // event.preventDefault();
+    const src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+    navigate('/music', { state: { src } });
+    // CreateNetwork.getMusicData(musicData);
 }
 
 return (
