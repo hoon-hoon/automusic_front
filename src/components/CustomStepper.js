@@ -10,6 +10,7 @@ import { FormControl, FormControlLabel, Radio, RadioGroup, Slider } from "@mui/m
 import { InstrumentForm } from "./InstrumentForm";
 import * as CreateNetwork from "../network/CreateNetwork";
 import { Navigate, useNavigate } from "react-router-dom";
+import InstrumentForm2 from "./InstrumentForm2";
 
 const steps = [
     "음악 분위기 선택",
@@ -30,7 +31,7 @@ const getStepContent = (step) => {
         case 3:
             return "bpm을 정해주세요.";
         case 4:
-            return "박자를 골라주세요.";
+            return "음의 높낮이를 결정해주세요.";
     }
 };
 
@@ -57,8 +58,9 @@ const detail = [
     },
     {
         step: 5,
-        content: '4/4',
-        content2: '8/8'
+        content: '높음',
+        content2: '중간',
+        content3: '낮음'
     },
 ];
 
@@ -233,6 +235,7 @@ return (
                         ] : activeStep === 2 ? [
                             <>
                                 <InstrumentForm onChange = {instChange} />
+                                {/* <InstrumentForm2 /> */}
                             </>
                         ] : activeStep === 3 ? [
                             <>
@@ -253,6 +256,7 @@ return (
                             <>
                                 <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
                                 <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
+                                <FormControlLabel value="2" control={<Radio />} label={detail[activeStep].content3} />
                             </>
                         ] : null
                         }
