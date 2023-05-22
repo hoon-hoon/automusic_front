@@ -9,6 +9,7 @@ export const InstrumentForm = ({ onChange }) => {
     inst2: "",
     inst3: "",
     inst4: "",
+    inst5: ""
   });
 
   onChange(formValues);
@@ -23,7 +24,7 @@ export const InstrumentForm = ({ onChange }) => {
 
   const instData = instrument.map((item, index) => {
     return (
-      <MenuItem key={index} value={item.id}>
+      <MenuItem key={index} value={item.value}>
         {item.item}
       </MenuItem>
     );
@@ -77,6 +78,19 @@ export const InstrumentForm = ({ onChange }) => {
           id="demo-simple-select-4"
           value={formValues.inst4}
           label="Instrument 4"
+          onChange={handleFormChange}
+          style={{ width: "100%" }}
+        >
+          {instData}
+        </Select>
+      </FormControl>
+      <FormControl className="FormControl">
+        <Select
+          name="inst5"
+          labelId="demo-simple-select-label-4"
+          id="demo-simple-select-4"
+          value={formValues.inst5}
+          label="Instrument 5"
           onChange={handleFormChange}
           style={{ width: "100%" }}
         >

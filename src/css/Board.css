@@ -9,10 +9,30 @@ body {
 }
 
 .leftSide {
-    width: 20%;
+    width: 10%;
     border: 1px solid red;
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+ul {
+    padding: 0;
+    margin: 10px;
+}
+
+li {
+    list-style: none;
+    height: 50px;
+    font-size: larger;
 }
 .rightSide {
-    width: 70%;
+    flex: 1;
     border: 1px solid blue;
+}
+
+.menuBar {
+    width: 100%;
+    height: 50%;
+    border: 1px solid purple;
 }

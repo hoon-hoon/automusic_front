@@ -15,18 +15,21 @@ import { Navigate, NavLink } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 
+
 function Header() {
   const [nickname, setNickname] = useState('');
   const [isLoggedin, setIsLoggedin] = useState(false);
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    const user = (localStorage.getItem("USER"));
+    const user = JSON.parse(localStorage.getItem("USER"));
     if (!user) {
       setIsLoggedin(false);
+      console.log("실패");
     } else {
       setNickname(user.nickname);
       setIsLoggedin(true);
+      console.log(user);
     }
   }, []);
 
@@ -67,6 +70,8 @@ function Header() {
     },
   }));
 
+  
+
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -75,9 +80,9 @@ function Header() {
 
   const currentPathname = window.location.pathname;
 
-  const logoutClicked = () => {
-    localStorage.setItem("USER", "");
-    navigate("/");
+  const logoutClicked = (event) => {
+    localStorage.removeItem("USER");
+    window.location.replace("/");
   }
 
   return (

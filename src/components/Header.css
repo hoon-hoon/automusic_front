@@ -17,6 +17,37 @@
     margin-right: 3vw;
 }
 
+#loginBtn {
+    transform: scale(1.1);
+}
+#logoutBtn:hover {
+    transition: 0.5s;
+    transform: scale(0.9);
+}
+
+.StyledTab a {
+    padding: 10px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .StyledTab a:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    padding: 10px 0;
+    max-width: 0;
+    border-bottom: 2px solid #c8a755;
+    color: #c8a755;
+    content: attr(data-hover);
+    -webkit-transition: max-width 0.5s;
+    -moz-transition: max-width 0.5s;
+    transition: max-width 0.5s;
+  }
+  
+  .StyledTab a:hover:before, .StyledTab a:focus:before {
+    max-width: 100%;
+  }
 
 
 
