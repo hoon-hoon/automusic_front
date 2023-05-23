@@ -8,6 +8,7 @@ import {Login} from "./pages/Login";
 import Main from "./pages/Main";
 import Music from "./pages/Music";
 import {SignUp} from "./pages/SignUp";
+import NewHeader from "./components/NewHeader";
 
 
 function LoginLayout() {
@@ -17,7 +18,7 @@ function LoginLayout() {
 function BasicLayout() {
   return (
     <>
-      <Header />
+      <NewHeader />
       <body style={{ marginTop: "80px" }}>
         <Outlet />
       </body>
@@ -32,6 +33,7 @@ function AppRouter() {
         <Route path="/" element={<LoginLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/NewHeader" element={<NewHeader />} />
         </Route>
         <Route path="/" element={<BasicLayout />}>
           <Route index element={<Main />} />

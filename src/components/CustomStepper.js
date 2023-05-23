@@ -58,9 +58,8 @@ const detail = [
     },
     {
         step: 5,
-        content: '높음',
-        content2: '중간',
-        content3: '낮음'
+        content: '낮음',
+        content2: '높음',
     },
 ];
 
@@ -144,6 +143,8 @@ const handleSkip = () => {
 
 const handleReset = () => {
     console.log(musicData);
+    console.log(JSON.stringify(musicData));
+
     setMusicData([]);
     setActiveStep(0);
 };
@@ -164,10 +165,12 @@ const instChange = (e) => {
 }
 
 const MusicCreate = (event) => {
+    CreateNetwork.getMusicData(musicData);
+
     // event.preventDefault();
-    const src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
-    navigate('/music', { state: { src } });
-    // CreateNetwork.getMusicData(musicData);
+
+    // const src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+    // navigate('/music', { state: { src } });
 }
 
 return (
@@ -256,7 +259,6 @@ return (
                             <>
                                 <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
                                 <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
-                                <FormControlLabel value="2" control={<Radio />} label={detail[activeStep].content3} />
                             </>
                         ] : null
                         }

@@ -5,40 +5,18 @@ import MusicPlayer from '../service/MusicService';
 import DownloadIcon from '@mui/icons-material/Download';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import ReplyIcon from '@mui/icons-material/Reply';
+import MidiPlayer from '../service/MidiPlayer';
 
 function Music() {
-    const location = useLocation();
-    const src = location.state?.src;
-    console.log(src);
-    const navigate = useNavigate();
+    const midiData = localStorage.getItem("MUSIC");
+    console.log(midiData);
 
-    function goCreate() {
-        navigate("/create");
-    }
-    
     return (
-        <div>
-            <h1>Music Page</h1>
-            <Box>
-            <MusicPlayer src={src} />
-            </Box>
-            <Button onClick={goCreate}><ReplyIcon />
-                다시 조건 설정하기
-            </Button>
-            <Button><AutorenewIcon />
-                같은 조건으로 다시 생성하기
-            </Button>
-            <Button>
-                <DownloadIcon />
-                download
-            </Button>
-            <Button>
-                
-            </Button>
-
-
-        </div>
+      <div>
+        <h1>MIDI 파일 재생</h1>
+        <MidiPlayer midiData={midiData} />
+      </div>
     );
-}
+  };
 
 export default Music;

@@ -1,4 +1,4 @@
-.header {
+/* .header {
     background-color: #EEE5E0;
     max-width: -webkit-fill-available;
     height: 48px;
@@ -8,7 +8,8 @@
     padding: 10px;
 }
 
-#loginBtn, #logoutBtn {
+
+#loginBtn, #logoutBtn, #mypageBtn {
     float: right;
     background-color: #bf1650;
     color: white;
@@ -25,7 +26,7 @@
     transform: scale(0.9);
 }
 
-.StyledTab a {
+/* .StyledTab a {
     padding: 10px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
   }
@@ -47,10 +48,10 @@
   
   .StyledTab a:hover:before, .StyledTab a:focus:before {
     max-width: 100%;
-  }
+  } */
 
 
-
+/* 
 @media screen and (max-width: 895px) {
     .header {
         display: flex;
@@ -69,4 +70,4 @@
         background-color: black;
         color: black;
     }
-}
+} */
