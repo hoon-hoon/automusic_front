@@ -89,6 +89,7 @@
   .serve-button {
     text-decoration: underline;
     font-style: italic;
+    color: #000000;
   }
   
   .login-img {
