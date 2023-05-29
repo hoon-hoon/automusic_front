@@ -10,7 +10,6 @@ import { FormControl, FormControlLabel, Radio, RadioGroup, Slider } from "@mui/m
 import { InstrumentForm } from "./InstrumentForm";
 import * as CreateNetwork from "../network/CreateNetwork";
 import { Navigate, useNavigate } from "react-router-dom";
-import InstrumentForm2 from "./InstrumentForm2";
 
 const steps = [
     "음악 분위기 선택",
@@ -155,10 +154,6 @@ const handleRadioChange = (event) => {
     setSelectedValues(newSelectedValues);
 };
 
-const onhandlePost = async () => {
-    console.log();
-}
-
 const instChange = (e) => {
     setInst(e);
     console.log(e);
@@ -174,7 +169,7 @@ const MusicCreate = (event) => {
 }
 
 return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", marginTop: "-70px" }}>
         <Stepper activeStep={activeStep}>
             {steps.map((label, index) => {
                 const stepProps = {};
@@ -193,7 +188,7 @@ return (
         </Stepper>
         {activeStep === steps.length ? (
             <React.Fragment>
-                <Typography sx={{ mt: 2, mb: 1 }}>
+                <Typography sx={{ mt: 2, mb: 1 }} style={{marginTop:"50px"}}>
                     모든 과정이 끝났습니다! <br /> Create를 누르면 노래가 생성됩니다.
                 </Typography>
                 <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
@@ -208,8 +203,10 @@ return (
                 <Typography sx={{ mt: 2, mb: 1 }}>
 
                 </Typography>
+                <hr style={{borderTop: "10px solid #d29f8a", borderRadius: "10px", marginTop:"30px"}}></hr>
+
                 {/* Content 란 */}
-                <Typography style={{ margin: "30px" }}>{getStepContent(activeStep)}</Typography>
+                <Typography style={{ margin: "30px", marginBottom: "50px"}}>{getStepContent(activeStep)}</Typography>
 
                 <FormControl>
 

@@ -5,14 +5,14 @@ export const getUser = (userId, password) => {
 
     axios.post(`${API_BASE_URL}/signIn`, {
             userId : userId,
-            pw : password
-        })
+            pw : password,
+        }, {withCredentials : true} )
         .then(response => {
             // 로그인 성공
             if (response.status === 200) {
                 //sessionStorage.setItem("access_token", response.data.token);
-                window.location.href="/"; // href
-                localStorage.setItem("USER", JSON.stringify(response.data));
+                window.location.href="/";
+                localStorage.setItem("USER", JSON.stringify(response.data.userId));
             }
         })
         .catch(err => {

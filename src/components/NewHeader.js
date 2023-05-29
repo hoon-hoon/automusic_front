@@ -13,6 +13,8 @@ import {
 import logo from "../asset/logo.png";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { API_BASE_URL } from "../AppConfig";
+import axios from "axios";
 
 function NewHeader() {
   const [nickname, setNickname] = useState('');
@@ -22,18 +24,47 @@ function NewHeader() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const userId = localStorage.getItem("USER");
+  console.log(userId);
 
-  React.useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("USER"));
-    if (!user) {
-      setIsLoggedin(false);
-      console.log("실패");
-    } else {
-      setNickname(user.nickname);
-      setIsLoggedin(true);
-      console.log(user);
-    }
-  }, []);
+
+  // React.useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("USER"));
+  //   if (!user) {
+  //     setIsLoggedin(false);
+  //     console.log("실패");
+  //   } else {
+  //     setNickname(user.nickname);
+  //     setIsLoggedin(true);
+  //     console.log(user);
+  //   }
+  // }, []);
+
+  // React.useEffect(() => {
+  //   const checkLoginStatus = async () => {
+  //     try {
+  //       const response = await axios.post(
+  //         `${API_BASE_URL}/isLogin`,
+  //         {},
+  //         {
+  //           withCredentials: true, // 쿠키를 서버에 전송하기 위해 필요한 옵션
+  //         }
+  //       );
+  
+  //       if (response.status === 200) {
+  //         setNickname(userId);
+  //         setIsLoggedin(true);
+  //       }
+  //     } catch (error) {
+  //       setIsLoggedin(false);
+  //       console.log(error);
+  //       console.log("실패");
+  //     }
+  //   };
+  
+  //   checkLoginStatus();
+  // }, []);
+  
 
   useEffect(() => {
     const path = window.location.pathname;
@@ -114,14 +145,16 @@ function NewHeader() {
               <Button id="logoutBtn" variant="contained" onClick={logoutClicked}>LogOut</Button>
             </div>
             ) : (
-              <Link href="/Login">
-                <Button
-                  id="loginBtn"
-                  variant="contained"
-                >
-                  LOGIN
-                </Button>
-              </Link>
+              <div id="loggedOutDiv">
+                <Link href="/Login">
+                  <Button
+                    id="loginBtn"
+                    variant="contained"
+                  >
+                    LOGIN
+                  </Button>
+                </Link>
+              </div>
             )}
 
           </Grid>

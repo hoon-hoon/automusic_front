@@ -119,6 +119,12 @@ body * {
     padding-top: 0%;
 } 
 
+#loggedOutDiv {
+    padding-right: 50px;
+    width: 200px;
+    margin-top: 20px;
+}
+
 /* .css-11reh94-MuiGrid-root > .MuiGrid-item {
     padding-left: 0px !important;
     padding-top : 65px !important;
