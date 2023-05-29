@@ -6,7 +6,22 @@ import "../css/SignUp.css";
 export const SignUp = () => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordCheck, setPasswordCheck] = useState(false);
     const [nickname, setNickname] = useState('');
+
+    const checkedPassword = (checkPw, pw) => {
+        if (checkPw === pw) {
+          setPasswordCheck(true);
+        }
+        else {
+          setPasswordCheck(false);
+        }
+    };
+
+    const handleSignUp = (e) => {
+        e.preventDefault(); // 폼의 기본 동작인 페이지 새로고침을 막음
+        SignUpService.signUpButtonClicked(id, password, nickname);
+    };
 
     return (
         <div className="signup">
@@ -16,6 +31,7 @@ export const SignUp = () => {
                 </div>
                 <div className='form-container'>
                     <p className="title">회원가입</p>
+                    <form onSubmit={handleSignUp}>
                     <div class="input-container">
                         <label htmlFor='id'>아이디</label>
                         <hr className='hrBig'></hr>
@@ -33,7 +49,12 @@ export const SignUp = () => {
                     <div class="input-container">
                         <label htmlFor='passwordCheck'>비밀번호 확인</label>
                         <hr className='hrBig'></hr>
-                        <input type='password' name='passwordCheck' id="passwordCheck" />
+                        <input type='password' name='passwordCheck' id="passwordCheck"
+                            onChange={(e) => checkedPassword(e.target.value, password)} required/>
+                            {passwordCheck 
+                                ? (<p>일치</p>) 
+                                : (<p>불일치</p>)
+                            }
                         <hr className='hrSmall'></hr>
                     </div>
                     <div class="input-container">
@@ -44,9 +65,9 @@ export const SignUp = () => {
                         <hr className='hrSmall'></hr>
                     </div>
                     <div>
-                        <button className="signup-button" type='button'
-                            onClick={(e) => { SignUpService.signUpButtonClicked(id, password, nickname) }}>회원가입</button>
+                    <button className="signup-button" type='submit'>회원가입</button>
                     </div>
+                    </form>
                     <div className='bottom-login-button'>
                             <div className="button-text">등록된 회원 정보가 있으신가요?</div>
                             <div className="serve-button"><Link to="/login">로그인</Link></div>
