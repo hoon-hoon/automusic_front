@@ -12,14 +12,14 @@ export const Login = () => {
             <div className='login-container'>
                 <div className='form-container'>
                     <p className="title">로그인</p>
-                    <div class="input-container">
+                    <div className="input-container">
                         <label htmlFor='id'>아이디</label>
                         <hr className='hrBig'></hr>
                         <input type='text' name='id' value={userId}
                             onChange={(e)=>{LoginService.userIdChanged(e, setUserId)}} />
                         <hr className='hrSmall'></hr>
                     </div>
-                    <div class="input-container">
+                    <div className="input-container">
                         <label htmlFor='password'>비밀번호</label>
                         <hr className='hrBig'></hr>
                         <input type='password' name='password' value={password}
