@@ -6,8 +6,6 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { FormControl, FormControlLabel, Radio, RadioGroup, Slider } from "@mui/material";
 import { Instrument } from "./Instrument";
-import * as CreateNetwork from "../network/CreateNetwork";
-import SongService from "../service/SongService";
 import {useEffect} from "react";
 import SongService from "../service/SongService";
 import {useHistory} from "react-router-dom";
