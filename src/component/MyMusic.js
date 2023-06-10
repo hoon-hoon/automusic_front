@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import Loading from "./Loading";
 
-export default function Home(props){
+export default function MyMusic(props){
 
     const {isLoading, songs} = props;
 

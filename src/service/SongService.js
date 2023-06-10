@@ -8,24 +8,35 @@ class SongService{
         return axios.get( BACKEND_URL);
     }
 
-    getSong(id){
-        return axios.get(BACKEND_URL + id);
+    getSong(fileName){
+        return axios.get(`${BACKEND_URL}/${fileName}`);
     }
 
-    createSong(formData){
-        return axios.post(BACKEND_URL, formData, {
+    getMySong(){
+        const token = localStorage.getItem(token)
+        return axios.get(`${BACKEND_URL}/my`,{
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Authorization' : token
             }
         });
     }
 
-    updateSong(song){
-        return axios.put(BACKEND_URL + song.id, song);
+    createSong(musicDto){
+        const token = localStorage.getItem(token);
+        return axios.post(BACKEND_URL, musicDto, {
+            headers: {
+                'Authorization': token
+            }
+        });
     }
 
-    deleteSong(song){
-        return axios.delete(BACKEND_URL + song.id);
+    deleteSong(fileName){
+        const token = localStorage.getItem(token)
+        return axios.delete(`${BACKEND_URL}/${fileName}`,{
+            headers:{
+                'Authorization' : token
+            }
+        });
     }
 
 }
