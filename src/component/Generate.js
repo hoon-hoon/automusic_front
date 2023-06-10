@@ -6,8 +6,11 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { FormControl, FormControlLabel, Radio, RadioGroup, Slider } from "@mui/material";
 import { Instrument } from "./Instrument";
+import * as CreateNetwork from "../network/CreateNetwork";
+import SongService from "../service/SongService";
 import {useEffect} from "react";
 import {useHistory} from "react-router-dom";
+import App from "../App";
 
 const steps = [
     "음악 분위기 선택",
@@ -60,7 +63,7 @@ const detail = [
     },
 ];
 
-export default function Generate() {
+export default function Generate({ createSong }) {
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
     const [musicData, setMusicData] = React.useState([""]);
@@ -72,7 +75,7 @@ export default function Generate() {
     useEffect(() => {
         SongService.getMySong()
             .catch((err)=>{
-                history.push("/login");
+                history.push("/signin");
                 console.log(err);
             })
     }, []);
@@ -169,7 +172,8 @@ export default function Generate() {
 
     const MusicCreate = (event) => {
         // CreateNetwork.getMusicData(musicData);
-        SongService.createSong(musicData);
+        // SongService.createSong(musicData);
+        createSong(musicData);
 
         // event.preventDefault();
 

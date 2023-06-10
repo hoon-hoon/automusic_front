@@ -15,7 +15,7 @@ export default function MyMusic(props){
                 setSongs(response.data);
             })
             .catch((err)=>{
-                history.push("/login");
+                history.push("/signin");
                 console.log(err);
             })
     }, []);

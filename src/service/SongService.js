@@ -1,4 +1,5 @@
 import axios from 'axios';
+import App from "../App.js";
 
 const BACKEND_URL = "http://ykh8746.iptime.org:8080/song";
 
@@ -21,26 +22,29 @@ class SongService {
         });
     }
 
-    createSong(musicDto) {
+    createSong(musicDto, successCallback) {
         const [atmosphere, atDetail, instrument, bpm, highlow] = musicDto;
         const token = localStorage.getItem("USER");
-        return axios.post(BACKEND_URL, {
-            atmosphere: atmosphere,
-            atDetail: atDetail,
-            instrument: instrument,
-            bpm: bpm,
-            highlow: highlow
-        }
-            , {
+        
+        return axios.post(BACKEND_URL, 
+            {
+                atmosphere: atmosphere,
+                atDetail: atDetail,
+                instrument: instrument,
+                bpm: bpm,
+                highlow: highlow
+            }, 
+            {
                 headers: {
                     'Authorization': token
                 }
             })
-            .then(response => {
-                console.log(response.data);
-                window.alert(`Create Success! \nFilename: ${response.data.fileName} `)
-                this.getSong(response.data.fileName);
-            })
+            // .then(response => {
+            //     console.log(response.data);
+            //     window.alert(`Create Success! \nFilename: ${response.data.fileName} `)
+            //     localStorage.setItem("MUSIC", response.data.fileName);
+            //     // window.location.reload();
+            // })
 
     }
 

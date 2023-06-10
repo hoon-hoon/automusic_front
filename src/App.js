@@ -162,6 +162,22 @@ function App() {
     const logoutClicked = () => {
         localStorage.removeItem("USER");
     }
+
+    function handleCreateSong(musicDto) {
+
+        // const fileName = localStorage.getItem("MUSIC");
+        // console.log(fileName);
+        
+        SongService.createSong(musicDto)
+            .then((song) => {
+                playSongHandler(song)
+                console.log(currentSong);
+            })
+            .catch((error) => {
+                // 에러 처리
+                console.log("fail");
+            });
+    }
     return (
 
         <Router>
@@ -224,7 +240,7 @@ function App() {
 
                 <Switch>
                     <Route path="/generate">
-                        <Generate />
+                        <Generate createSong={handleCreateSong} />
                     </Route>
                     {/*<Route path="/song/:id">*/}
                     {/*    <EditSong updateSong={updateSong} refreshSongs={refreshSongs} />*/}
