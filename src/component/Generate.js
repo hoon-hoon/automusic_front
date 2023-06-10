@@ -9,7 +9,6 @@ import { Instrument } from "./Instrument";
 import * as CreateNetwork from "../network/CreateNetwork";
 import SongService from "../service/SongService";
 import {useEffect} from "react";
-import SongService from "../service/SongService";
 import {useHistory} from "react-router-dom";
 
 const steps = [

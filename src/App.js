@@ -1,6 +1,9 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import SongService from "./service/SongService";
 import Generate from './component/Generate';
+import { RiFolderMusicLine } from "react-icons/ri";
+import { MdQueueMusic, MdPlaylistAdd } from "react-icons/md";
+import { FaRegUserCircle } from "react-icons/fa";
 
 import {
     BrowserRouter as Router,
@@ -32,6 +35,7 @@ function App() {
     const [queue, setQueue] = useState([]);
     const [history, setHistory] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isLoggedin, setIsLoggedin] = useState(false);
 
     //Load the songs from the backend when the page first loads
     useEffect(() => {
@@ -48,12 +52,24 @@ function App() {
 
     }, []);
 
+    useEffect(() => {
+        const user = localStorage.getItem("USER");
+        if (!user) {
+            setIsLoggedin(false);
+            console.log("실패");
+        } else {
+            setIsLoggedin(true);
+            console.log(user);
+            console.log("성공");
+        }
+    }, []);
+
     //every time the currentSong is updated, play that song.
     useEffect(() => {
         play();
     }, [currentSong]);
 
-    function audio(){
+    function audio() {
         return document.querySelector("audio");
     }
 
@@ -62,7 +78,7 @@ function App() {
         setPlaying(true);
     }
 
-    function pauseSong(){
+    function pauseSong() {
         audio().pause();
         setPlaying(false);
     }
@@ -71,7 +87,7 @@ function App() {
         audio().currentTime = 0;
     }
 
-    function refreshSongs(){
+    function refreshSongs() {
 
         setIsLoading(true);
 
@@ -86,10 +102,10 @@ function App() {
 
     }
 
-    function updateSong(updatedSong){
+    function updateSong(updatedSong) {
 
         setSongs(songs.map(function (song) {
-            if (song.id === updatedSong.id){
+            if (song.id === updatedSong.id) {
                 return updatedSong;
             }
             return song;
@@ -108,7 +124,7 @@ function App() {
             let currentQueue = [...queue];
             currentQueue.shift();
             setQueue(currentQueue);
-        }else{
+        } else {
             //pick a random song to play
             const randIndex = Math.floor(Math.random() * songs.length);
             setHistory([...history, currentSong]);
@@ -120,7 +136,7 @@ function App() {
     function prevSong() {
 
         //if within 5 seconds, go to last song
-        if (document.querySelector("audio").currentTime <= 5){
+        if (document.querySelector("audio").currentTime <= 5) {
             if (history.length > 0) {
                 let currentHistory = history;
                 let lastSong = history.pop();
@@ -129,7 +145,7 @@ function App() {
                 setQueue([currentSong, ...queue]);
                 setCurrentSong(lastSong);
             }
-        }else{
+        } else {
             restartSong();
         }
 
@@ -143,6 +159,9 @@ function App() {
         setQueue([...queue, songKey]);
     }
 
+    const logoutClicked = () => {
+        localStorage.removeItem("USER");
+    }
     return (
 
         <Router>
@@ -151,53 +170,54 @@ function App() {
                 <div className="bg-gray-900 text-center m-5 rounded-3xl pt-3">
                     <h1 className="text-6xl font-extrabold text-white">Auto Music</h1>
                     <img src="https://media.tenor.com/HJvqN2i4Zs4AAAAi/milk-and-mocha-cute.gif"
-                         className="mx-auto p-4"/>
+                        className="mx-auto p-4" />
                     <div className="inline-flex pb-2 space-x-2">
 
                         <Link to="/allMusic">
                             <button type="button"
-                                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                </svg>
+                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
+                                <MdQueueMusic />
                                 All Music
                             </button>
                         </Link>
 
                         <Link to="/myMusic">
                             <button type="button"
-                                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                                </svg>
+                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
+                                <RiFolderMusicLine />
                                 My Music
                             </button>
                         </Link>
 
                         <Link to="/generate">
                             <button type="button"
-                                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                                </svg>
+                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
+                                <MdPlaylistAdd />
                                 Generate
                             </button>
                         </Link>
 
-                        <Link to="/login">
-                            <button type="button"
+                        {isLoggedin ? (
+                            <Link to="/signIn">
+                                <button type="button"
                                     className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                                </svg>
-                                Login
-                            </button>
-                        </Link>
-
+                                    <FaRegUserCircle />
+                                    Login
+                                </button>
+                            </Link>
+                        ) : (
+                            <Link to="/">
+                                <button type="button" onClick={logoutClicked}
+                                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
+                                    <FaRegUserCircle />
+                                    Logout
+                                </button>
+                            </Link>
+                        )}
                     </div>
                     <audio onEnded={nextSong} onPause={() => setPlaying(false)} onPlay={() => setPlaying(true)} className="mx-auto w-full"
-                           src={`http://ykh8746.iptime.org:8080/static/music/${currentSong.userId}_${currentSong.fileName}.wav`} autoPlay={true} controls>
-                        <source type="audio/mpeg"/>
+                        src={`http://ykh8746.iptime.org:8080/static/music/${currentSong.userId}_${currentSong.fileName}.wav`} autoPlay={true} controls>
+                        <source type="audio/mpeg" />
                         Your browser does not support the audio element.
                     </audio>
                 </div>
@@ -212,7 +232,7 @@ function App() {
                     <Route path="/myMusic">
                         <MyMusic isLoading={isLoading}></MyMusic>
                     </Route>
-                    <Route path="/login">
+                    <Route path="/signin">
                         <Login></Login>
                     </Route>
                     <Route path="/signUp">
