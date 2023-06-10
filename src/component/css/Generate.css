@@ -1,0 +1,24 @@
+.wrapper {
+    background-color: white;
+    border-radius: 5%;
+    margin-bottom: 50px;
+}
+
+/* 스텝퍼 감싸는 div */
+.css-m5vj9m-MuiStepper-root {
+    justify-content: center;
+    background-color: white;
+}
+
+/* 스텝퍼 사이 선 */
+.css-j5w0w9-MuiStepConnector-root {
+    display: none;
+}
+
+/* 스텝퍼 스텝 번호 체크 전 / 후 */
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active,
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed,
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root,
+.css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked {
+    color: #bf1650 !important;
+}

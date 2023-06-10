@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import SongService from "./service/SongService";
+import Generate from './component/Generate';
 
 import {
     BrowserRouter as Router,
@@ -164,7 +165,7 @@ function App() {
         <Router>
             <div className="mx-auto md:max-w-4xl mt-50">
 
-                <div className="bg-gray-900 text-center m-20 rounded-3xl pt-3">
+                <div className="bg-gray-900 text-center m-5 rounded-3xl pt-3">
                     <h1 className="text-6xl font-extrabold text-white">Auto Music</h1>
                     <img src="https://media.tenor.com/HJvqN2i4Zs4AAAAi/milk-and-mocha-cute.gif"
                          className="mx-auto p-4"/>
@@ -229,7 +230,10 @@ function App() {
                     </audio>
                 </div>
 
-                {/*<Switch>*/}
+                <Switch>
+                    <Route path="/generate">
+                        <Generate />
+                    </Route>
                 {/*    <Route path="/song/:id">*/}
                 {/*        <EditSong updateSong={updateSong} refreshSongs={refreshSongs} />*/}
                 {/*    </Route>*/}
@@ -242,7 +246,7 @@ function App() {
                 {/*    <Route path="/">*/}
                 {/*        <Home favoriteHandler={favoriteHandler} updateSong={updateSong} songs={songs} isLoading={isLoading} queue={queue} currentSong={currentSong} playSongButton={playSongHandler} queueSong={queueSongHandler} setQueue={setQueue} />*/}
                 {/*    </Route>*/}
-                {/*</Switch>*/}
+                </Switch>
 
             </div>
 
