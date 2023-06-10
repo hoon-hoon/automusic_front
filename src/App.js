@@ -9,6 +9,8 @@ import {
     Link
 } from "react-router-dom";
 import Home from "./component/Home";
+import Login from "./component/Login";
+import SignUp from "./component/SignUp";
 
 
 // import Catalog from "./components/Catalog";
@@ -181,7 +183,7 @@ function App() {
                             </button>
                         </Link>
 
-                        <Link to="/signIn">
+                        <Link to="/login">
                             <button type="button"
                                     className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -209,9 +211,12 @@ function App() {
                     {/*<Route path="/upload">*/}
                     {/*    <UploadSong />*/}
                     {/*</Route>*/}
-                    {/*<Route path="/catalog">*/}
-                    {/*    <Catalog favoriteHandler={favoriteHandler} updateSong={updateSong} songs={songs} isLoading={isLoading} queue={queue} currentSong={currentSong} playSongButton={playSongHandler} queueSong={queueSongHandler} setQueue={setQueue} />*/}
-                    {/*</Route>*/}
+                    <Route path="/login">
+                        <Login></Login>
+                    </Route>
+                    <Route path="/signUp">
+                        <SignUp></SignUp>
+                    </Route>
                     <Route path="/allMusic">
                         <Home updateSong={updateSong} songs={songs} isLoading={isLoading} queue={queue} currentSong={currentSong} playSongButton={playSongHandler} queueSong={queueSongHandler} setQueue={setQueue} />
                     </Route>

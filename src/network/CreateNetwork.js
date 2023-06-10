@@ -1,6 +1,5 @@
 import axios from "axios";
 import {API_BASE_URL} from "../AppConfig";
-import MidiPlayer from "../service/MidiPlayer";
 
 const headers = {
     "Authorization": localStorage.getItem("USER")

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import * as SignUpService from "../service/SignUpService";
 import "../css/SignUp.css";
+import UserService from "../service/UserService";
 
 export const SignUp = () => {
     const [id, setId] = useState('');
@@ -20,11 +20,33 @@ export const SignUp = () => {
 
     const handleSignUp = (e) => {
         e.preventDefault(); // 폼의 기본 동작인 페이지 새로고침을 막음
-        SignUpService.signUpButtonClicked(id, password, nickname);
+        signUpButtonClicked(id, password, nickname);
     };
 
+    const userIdChanged = (event) => {
+        setId(event.currentTarget.value)
+    }
+
+    const passwordChanged = (event) => {
+        setPassword(event.currentTarget.value)
+    }
+
+    const nickNameChanged = (event) => {
+        setNickname(event.currentTarget.value)
+    }
+
+    const signUpButtonClicked = (id, password, nickname) => {
+        const newUser = {
+            userId : id,
+            pw : password,
+            nickname : nickname
+        }
+
+        UserService.signUp(id,password,nickname)
+    }
+
     return (
-        <div className="signup">
+        <div className="flex flex-col">
             <div className="signup-container">
                 <div className='image-container'>
                     <img className="signup-img" src="/images/signupImg.jpeg" alt="signupImg" loading="lazy" />
@@ -32,21 +54,21 @@ export const SignUp = () => {
                 <div className='form-container'>
                     <p className="title">회원가입</p>
                     <form onSubmit={handleSignUp}>
-                    <div class="input-container">
+                    <div className="input-container">
                         <label htmlFor='id'>아이디</label>
                         <hr className='hrBig'></hr>
-                        <input class="id" type='text' name='id' id="id" value={id} 
-                            onChange={(e) => { SignUpService.userIdChanged(e, setId) }} />
+                        <input className="id" type='text' name='id' id="id" value={id}
+                            onChange={userIdChanged} />
                         <hr className='hrSmall'></hr>
                     </div>
-                    <div class="input-container">
+                    <div className="input-container">
                         <label htmlFor='password'>비밀번호</label>
                         <hr className='hrBig'></hr>
                         <input type='password' name='password' id="password" value={password}
-                            onChange={(e) => { SignUpService.passwordChanged(e, setPassword) }} />
+                            onChange={passwordChanged} />
                         <hr className='hrSmall'></hr>
                     </div>
-                    <div class="input-container">
+                    <div className="input-container">
                         <label htmlFor='passwordCheck'>비밀번호 확인</label>
                         <hr className='hrBig'></hr>
                         <input type='password' name='passwordCheck' id="passwordCheck"
@@ -57,11 +79,11 @@ export const SignUp = () => {
                             }
                         <hr className='hrSmall'></hr>
                     </div>
-                    <div class="input-container">
+                    <div className="input-container">
                         <label htmlFor='nickname'>닉네임</label>
                         <hr className='hrBig'></hr>
                         <input type='text' name='nickname' id="nickname" value={nickname}
-                            onChange={(e) => { SignUpService.nickNameChanged(e, setNickname) }} />
+                            onChange={nickNameChanged} />
                         <hr className='hrSmall'></hr>
                     </div>
                     <div>
