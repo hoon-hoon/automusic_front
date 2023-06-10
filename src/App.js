@@ -182,8 +182,7 @@ function App() {
 
         <Router>
             <div className="mx-auto md:max-w-4xl mt-50">
-
-                <div className="bg-gray-900 text-center m-5 rounded-3xl pt-3">
+                <div className="bg-gray-900 text-center m-5 rounded-3xl pt-3 h-fit">
                     <h1 className="text-6xl font-extrabold text-white">Auto Music</h1>
                     <img src="https://media.tenor.com/HJvqN2i4Zs4AAAAi/milk-and-mocha-cute.gif"
                         className="mx-auto p-4" />
@@ -231,13 +230,14 @@ function App() {
                             </Link>
                         )}
                     </div>
-                    <audio onEnded={nextSong} onPause={() => setPlaying(false)} onPlay={() => setPlaying(true)} className="mx-auto w-full"
-                        src={`http://ykh8746.iptime.org:8080/static/music/${currentSong.userId}_${currentSong.fileName}.wav`} autoPlay={true} controls>
+                </div>
+                <div className="sticky top-0">
+                    <audio onEnded={nextSong} onPause={() => setPlaying(false)} onPlay={() => setPlaying(true)} className="mx-auto w-full sticky top-0"
+                           src={`http://ykh8746.iptime.org:8080/static/music/${currentSong.userId}_${currentSong.fileName}.wav`} autoPlay={true} controls>
                         <source type="audio/mpeg" />
                         Your browser does not support the audio element.
                     </audio>
                 </div>
-
                 <Switch>
                     <Route path="/generate">
                         <Generate createSong={handleCreateSong} />
