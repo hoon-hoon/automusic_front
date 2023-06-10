@@ -47,7 +47,8 @@ class SongService {
 
     }
 
-    deleteSong(fileName) {
+    deleteSong(song) {
+        const fileName = song.fileName;
         const token = localStorage.getItem("USER")
         return axios.delete(`${BACKEND_URL}/${fileName}`, {
             headers: {

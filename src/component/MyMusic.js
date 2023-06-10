@@ -9,6 +9,17 @@ export default function MyMusic(props){
     const [songs, setSongs] = useState([]);
     const history = useHistory();
 
+    function deleteSongHandler(song){
+        SongService.deleteSong(song)
+            .then((response)=>{
+                setSongs(response.data);
+                setIsLoading(false);
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
+    }
+
     useEffect(() => {
         SongService.getMySong()
             .then((response) => {
@@ -71,12 +82,18 @@ export default function MyMusic(props){
                                                 <td className="px-6 py-4 whitespace-nowrap text-lg font-medium text-white">
                                                     {song.userId}
                                                 </td>
-                                                <td className="px-12 py-4 whitespace-nowrap text-lg font-medium text-white text-right">
+                                                <td className="pl-12 py-4 whitespace-nowrap text-lg font-medium text-white text-right">
                                                     <button
-                                                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                                        className="inline-flex items-center mx-2 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                                                         onClick={() => props.playSongButton(song)}
                                                     >
                                                         Play
+                                                    </button>
+                                                    <button
+                                                        className="inline-flex items-center mx-2 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                                        onClick={() => deleteSongHandler(song)}
+                                                    >
+                                                        DELETE
                                                     </button>
                                                 </td>
                                             </tr>
