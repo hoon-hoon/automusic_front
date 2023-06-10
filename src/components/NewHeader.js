@@ -146,7 +146,7 @@ function NewHeader() {
             </div>
             ) : (
               <div id="loggedOutDiv">
-                <Link href="/Login">
+                <Link href="/src/component/Login">
                   <Button
                     id="loginBtn"
                     variant="contained"

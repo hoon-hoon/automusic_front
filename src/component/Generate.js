@@ -8,6 +8,9 @@ import { FormControl, FormControlLabel, Radio, RadioGroup, Slider } from "@mui/m
 import { Instrument } from "./Instrument";
 import * as CreateNetwork from "../network/CreateNetwork";
 import SongService from "../service/SongService";
+import {useEffect} from "react";
+import SongService from "../service/SongService";
+import {useHistory} from "react-router-dom";
 
 const steps = [
     "음악 분위기 선택",
@@ -67,6 +70,16 @@ export default function Generate() {
     const [bpm, setBpm] = React.useState(50);
     const [inst, setInst] = React.useState('0');
     const [selectedValues, setSelectedValues] = React.useState([]);
+    const history = useHistory();
+
+    useEffect(() => {
+        SongService.getMySong()
+            .catch((err)=>{
+                history.push("/login");
+                console.log(err);
+            })
+    }, []);
+
 
     let lastData = musicData;
     // const navigate = useNavigate();

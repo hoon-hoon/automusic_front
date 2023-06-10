@@ -13,7 +13,7 @@ class SongService{
     }
 
     getMySong(){
-        const token = localStorage.getItem(token)
+        const token = localStorage.getItem("USER")
         return axios.get(`${BACKEND_URL}/my`,{
             headers: {
                 'Authorization' : token
@@ -22,7 +22,7 @@ class SongService{
     }
 
     createSong(musicDto){
-        const token = localStorage.getItem(token);
+        const token = localStorage.getItem("USER");
         return axios.post(BACKEND_URL, musicDto, {
             headers: {
                 'Authorization': token
@@ -31,7 +31,7 @@ class SongService{
     }
 
     deleteSong(fileName){
-        const token = localStorage.getItem(token)
+        const token = localStorage.getItem("USER")
         return axios.delete(`${BACKEND_URL}/${fileName}`,{
             headers:{
                 'Authorization' : token
