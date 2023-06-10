@@ -1,5 +1,4 @@
 import axios from 'axios';
-import App from "../App.js";
 
 const BACKEND_URL = "http://ykh8746.iptime.org:8080/song";
 
@@ -58,5 +57,5 @@ class SongService {
     }
 
 }
-
-export default new SongService();
+const songService = new SongService();
+export default songService;

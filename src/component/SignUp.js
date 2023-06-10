@@ -37,12 +37,6 @@ export const SignUp = () => {
     }
 
     const signUpButtonClicked = (id, password, nickname) => {
-        const newUser = {
-            userId : id,
-            pw : password,
-            nickname : nickname
-        }
-
         UserService.signUp(id,password,nickname,history);
     }
 

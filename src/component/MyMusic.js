@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
 import Loading from "./Loading";
 import SongService from "../service/SongService";
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 export default function MyMusic(props){
 
-    const {isLoading} = props;
+    const [isLoading, setIsLoading] = useState(true);
     const [songs, setSongs] = useState([]);
     const history = useHistory();
 
@@ -13,12 +13,13 @@ export default function MyMusic(props){
         SongService.getMySong()
             .then((response) => {
                 setSongs(response.data);
+                setIsLoading(false);
             })
             .catch((err)=>{
                 history.push("/signin");
                 console.log(err);
             })
-    }, []);
+    }, [history]);
 
     return (
         <>
@@ -28,68 +29,66 @@ export default function MyMusic(props){
                         <div className="shadow overflow-hidden border-gray-200 sm:rounded-lg">
                             <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-900">
-                                <tr className="grid grid-cols-6">
-                                    {
-                                        (isLoading) ?
-                                            <>
-                                                <th scope="col"
-                                                    className="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider">
-                                                    Songs
-                                                </th>
-                                            </> :
-                                            <>
-                                                <th scope="col"
-                                                    className="col-span-3 px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider">
-                                                    Songs
-                                                </th>
-                                                <th scope="col"
-                                                    className="col-span-3 px-6 py-3 text-right text-lg font-medium text-gray-500 uppercase tracking-wider">
-                                                    Controls
-                                                </th>
-                                            </>
-                                    }
-
-
+                                <tr>
+                                    {isLoading ? (
+                                        <th
+                                            scope="col"
+                                            className="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
+                                        >
+                                            Songs
+                                        </th>
+                                    ) : (
+                                        <>
+                                            <th
+                                                className="px-6 py-3 text-left text-lg font-extrabold text-gray-500 uppercase tracking-wider"
+                                            >
+                                                Songs
+                                            </th>
+                                            <th
+                                                className="px-6 py-3 text-left text-lg font-extrabold text-gray-500 uppercase tracking-wider"
+                                            >
+                                                User
+                                            </th>
+                                            <th
+                                                className="px-6 py-3 text-right text-lg font-extrabold text-gray-500 uppercase tracking-wider"
+                                            >
+                                                Controls
+                                            </th>
+                                        </>
+                                    )}
                                 </tr>
                                 </thead>
                                 <tbody>
-
-                                {
-
-                                    (isLoading) ? <Loading /> :
-                                        <>
-                                            {
-                                                songs.map((song) => {
-                                                    return (
-                                                        <tr className="bg-gray-900 grid grid-cols-6">
-                                                            <td className="col-span-3 px-6 py-4 whitespace-nowrap text-lg font-medium text-white">
-                                                                {song.fileName}
-                                                            </td>
-                                                            <td className="col-span-3 px-6 py-4 whitespace-nowrap text-lg font-medium text-white">
-                                                                {song.userId}
-                                                            </td>
-                                                            <td className="col-span-3 px-6 py-4 whitespace-nowrap text-right text-sm font-medium inline-flex justify-end space-x-2">
-                                                                <button
-                                                                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                                                                    onClick={() => props.playSongButton(song)}>Play
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    );
-                                                })
-                                            }
-                                        </>
-
-                                }
-
+                                {isLoading ? (
+                                    <Loading />
+                                ) : (
+                                    <>
+                                        {songs.map((song) => (
+                                            <tr key={song.fileName} className="bg-gray-900">
+                                                <td className="px-6 py-4 whitespace-nowrap text-lg font-medium text-white">
+                                                    {song.fileName}
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-lg font-medium text-white">
+                                                    {song.userId}
+                                                </td>
+                                                <td className="px-12 py-4 whitespace-nowrap text-lg font-medium text-white text-right">
+                                                    <button
+                                                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                                        onClick={() => props.playSongButton(song)}
+                                                    >
+                                                        Play
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </>
+                                )}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </>
     );
 
