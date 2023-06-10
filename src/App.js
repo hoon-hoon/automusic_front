@@ -11,6 +11,7 @@ import {
 import Home from "./component/Home";
 import Login from "./component/Login";
 import SignUp from "./component/SignUp";
+import MyMusic from "./component/MyMusic";
 
 
 // import Catalog from "./components/Catalog";
@@ -208,9 +209,9 @@ function App() {
                     {/*<Route path="/song/:id">*/}
                     {/*    <EditSong updateSong={updateSong} refreshSongs={refreshSongs} />*/}
                     {/*</Route>*/}
-                    {/*<Route path="/upload">*/}
-                    {/*    <UploadSong />*/}
-                    {/*</Route>*/}
+                    <Route path="/myMusic">
+                        <MyMusic isLoading={isLoading}></MyMusic>
+                    </Route>
                     <Route path="/login">
                         <Login></Login>
                     </Route>

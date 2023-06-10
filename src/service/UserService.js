@@ -1,26 +1,28 @@
 import axios from "axios";
+import {useHistory} from "react-router-dom";
 
-const BACKEND_URL = "http://ykh8746.iptime.org:8080/song";
+const BACKEND_URL = "http://ykh8746.iptime.org:8080";
 
 class UserService {
-    login(userId, password) {
+
+    login(userId, password, history) {
         axios.post(`${BACKEND_URL}/signIn`,
             {
                 userId: userId,
                 pw: password,
             })
             .then(response => {
-                window.location.href = "/";
+                history.push("/myMusic");
                 localStorage.setItem("USER", response.data.token);
             })
             .catch(err => {
                 alert("로그인 실패")
-                window.location.href = "/login";
+                history.push("/login");
             });
 
     }
 
-    signUp(userId, password, nickname){
+    signUp(userId, password, nickname,history){
         axios.post(`${BACKEND_URL}/signUp`,
             {
                 userId : userId,
@@ -29,7 +31,7 @@ class UserService {
             })
             .then((response) => {
                 alert("회원가입 성공!!");
-                window.location.href = "/myMusic";
+                history.push("/myMusic");
             })
             .catch((err) => {
                 let msg = err.response.data.forEach(

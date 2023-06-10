@@ -1,9 +1,24 @@
 import {useEffect, useState} from "react";
 import Loading from "./Loading";
+import SongService from "../service/SongService";
+import {Link, useHistory} from "react-router-dom";
 
 export default function MyMusic(props){
 
-    const {isLoading, songs} = props;
+    const {isLoading} = props;
+    const [songs, setSongs] = useState([]);
+    const history = useHistory();
+
+    useEffect(() => {
+        SongService.getMySong()
+            .then((response) => {
+                setSongs(response.data);
+            })
+            .catch((err)=>{
+                history.push("/login");
+                console.log(err);
+            })
+    }, []);
 
     return (
         <>

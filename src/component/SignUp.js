@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import "../css/SignUp.css";
 import UserService from "../service/UserService";
 
@@ -8,6 +8,7 @@ export const SignUp = () => {
     const [password, setPassword] = useState('');
     const [passwordCheck, setPasswordCheck] = useState(false);
     const [nickname, setNickname] = useState('');
+    const history = useHistory();
 
     const checkedPassword = (checkPw, pw) => {
         if (checkPw === pw) {
@@ -42,7 +43,7 @@ export const SignUp = () => {
             nickname : nickname
         }
 
-        UserService.signUp(id,password,nickname)
+        UserService.signUp(id,password,nickname,history);
     }
 
     return (

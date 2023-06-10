@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import "../css/Login.css"
 import UserService from "../service/UserService";
 
 export const Login = () => {
     const [userId, setUserId] = useState('')
     const [password, setPassword] = useState('')
+    const history = useHistory();
 
     const userIdChanged = (event) => {
         setUserId(event.currentTarget.value)
@@ -17,7 +18,7 @@ export const Login = () => {
 
     const loginButtonClicked = (event, userId, password) => {
         event.preventDefault()// 기본 클릭 동작 방지
-        UserService.login(userId,password);
+        UserService.login(userId,password, history);
     }
 
     return(
