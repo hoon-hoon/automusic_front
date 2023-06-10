@@ -1,13 +1,79 @@
 .wrapper {
-    background-color: white;
-    border-radius: 5%;
     margin-bottom: 50px;
 }
 
+Button {
+    display: inline-flex; /* inline-flex를 적용한 값입니다 */
+    align-items: center; /* items-center를 적용한 값입니다 */
+    padding: 0.75rem 1rem; /* px-3 py-2를 적용한 값입니다 */
+    border: none; /* border를 적용한 값입니다 */
+    font-size: 0.875rem; /* text-sm를 적용한 값입니다 */
+    line-height: 1.25rem; /* leading-4를 적용한 값입니다 */
+    font-weight: 500; /* font-medium을 적용한 값입니다 */
+    border-radius: 0.375rem; /* rounded-md를 적용한 값입니다 */
+    color: #000000; /* text-black을 적용한 값입니다 */
+    background-color: #f0f0f0; /* bg-gray-100을 적용한 값입니다 */
+}
+
+Button:hover {
+    background-color: #d3d3d3; /* hover:bg-gray-300을 적용한 값입니다 */
+}
+
+Button:focus {
+    outline: none; /* focus:outline-none을 적용한 값입니다 */
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #9ca3af; /* focus:ring-2 focus:ring-offset-2 focus:ring-gray-500을 적용한 값입니다 */
+}
+
+label {
+    grid-column: span 3; /* col-span-3을 적용한 값입니다 */
+    padding: 1.5rem; /* px-6 py-3을 적용한 값입니다 */
+    text-align: left; /* text-left을 적용한 값입니다 */
+    font-size: 1.125rem; /* text-lg를 적용한 값입니다 */
+    font-weight: 500; /* font-medium을 적용한 값입니다 */
+    color: #888888; /* text-gray-500을 적용한 값입니다 */
+    text-transform: uppercase; /* uppercase을 적용한 값입니다 */
+    letter-spacing: 0.05em; /* tracking-wider를 적용한 값입니다 */
+}
+
+.text-align-last-center {
+    text-align-last: center;
+  }
+
+.border-grey-200 {
+    text-align-last: center;
+}
+
+.css-1nrlq1o-MuiFormControl-root {
+    width: auto !important;
+}
+
+.content {
+    text-align: center;
+}
+
+.css-1hbvpl3-MuiSvgIcon-root {
+    color: white;
+}
+
 /* 스텝퍼 감싸는 div */
-.css-m5vj9m-MuiStepper-root {
-    justify-content: center;
-    background-color: white;
+
+
+/* 스텝퍼 내부 라벨 */
+.css-1hv8oq8-MuiStepLabel-label {
+    color: white !important;
+    grid-column: span 3; /* col-span-3을 적용한 값입니다 */
+    padding: 1.5rem; /* px-6 py-3을 적용한 값입니다 */
+    text-align: left; /* text-left을 적용한 값입니다 */
+    font-size: 1.125rem; /* text-lg를 적용한 값입니다 */
+    font-weight: 500; /* font-medium을 적용한 값입니다 */
+    color: #888888; /* text-gray-500을 적용한 값입니다 */
+    text-transform: uppercase; /* uppercase을 적용한 값입니다 */
+    letter-spacing: 0.05em; /* tracking-wider를 적용한 값입니다 */
+}
+
+.css-1hv8oq8-MuiStepLabel-label.Mui-completed,
+.css-1hv8oq8-MuiStepLabel-label.Mui-active {
+    color: white !important;
 }
 
 /* 스텝퍼 사이 선 */
@@ -20,5 +86,11 @@
 .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed,
 .css-1e6y48t-MuiButtonBase-root-MuiButton-root,
 .css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked {
-    color: #bf1650 !important;
+    color: white !important;
+}
+
+
+/* 스텝퍼 스텝번호 체크 후 */
+.css-117w1su-MuiStepIcon-text {
+    fill: white !important;
 }

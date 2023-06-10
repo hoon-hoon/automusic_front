@@ -4,11 +4,10 @@ import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import { FormControl, FormControlLabel, Radio, RadioGroup, Slider } from "@mui/material";
 import { Instrument } from "./Instrument";
 import * as CreateNetwork from "../network/CreateNetwork";
+import SongService from "../service/SongService";
 
 const steps = [
     "음악 분위기 선택",
@@ -99,190 +98,198 @@ export default function Generate() {
             value = document.querySelector('input[name="radio-buttons-group"]:checked').value;
         }
 
-    setMusicData(prev => {
-        const newData = [...prev];
-        newData[activeStep] = value;
-        if (activeStep === 0) {
+        setMusicData(prev => {
+            const newData = [...prev];
             newData[activeStep] = value;
+            if (activeStep === 0) {
+                newData[activeStep] = value;
+            }
+            return newData;
+        });
+
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setSkipped(newSkipped);
+
+        // radio값 배열에 넣음
+        const newSelectedValues = [...selectedValues];
+        newSelectedValues[activeStep] = musicData;
+        setSelectedValues(newSelectedValues);
+        console.log("들어간 무드데이터:", musicData);
+
+    };
+
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+
+    const handleSkip = () => {
+        if (!isStepOptional(activeStep)) {
+            throw new Error("You can't skip a step that isn't optional.");
         }
-        return newData;
-    });
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setSkipped((prevSkipped) => {
+            const newSkipped = new Set(prevSkipped.values());
+            newSkipped.add(activeStep);
+            return newSkipped;
+        });
 
-    // radio값 배열에 넣음
-    const newSelectedValues = [...selectedValues];
-    newSelectedValues[activeStep] = musicData;
-    setSelectedValues(newSelectedValues);
-    console.log("들어간 무드데이터:", musicData);
+        const newSelectedValues = [...selectedValues];
+        newSelectedValues[activeStep] = ["skip"];
+    };
 
-};
+    const handleReset = () => {
+        console.log(musicData);
+        console.log(JSON.stringify(musicData));
 
-const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-};
+        setMusicData([]);
+        setActiveStep(0);
+    };
 
-const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-        throw new Error("You can't skip a step that isn't optional.");
+    const handleRadioChange = (event) => {
+        const newSelectedValues = [...selectedValues];
+        newSelectedValues[activeStep] = event.target.value;
+        setSelectedValues(newSelectedValues);
+    };
+
+    const instChange = (e) => {
+        setInst(e);
+        console.log(e);
     }
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-        const newSkipped = new Set(prevSkipped.values());
-        newSkipped.add(activeStep);
-        return newSkipped;
-    });
+    const MusicCreate = (event) => {
+        // CreateNetwork.getMusicData(musicData);
+        SongService.createSong(musicData);
 
-    const newSelectedValues = [...selectedValues];
-    newSelectedValues[activeStep] = ["skip"];
-};
+        // event.preventDefault();
 
-const handleReset = () => {
-    console.log(musicData);
-    console.log(JSON.stringify(musicData));
+        // const src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+        // navigate('/music', { state: { src } });
+    }
 
-    setMusicData([]);
-    setActiveStep(0);
-};
+    return (
+        <div className="flex flex-col">
+            <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 border border-gray">
+                    <div className="shadow overflow-hidden border-gray-200 sm:rounded-lg text-align-last-center">
+                            <Stepper activeStep={activeStep}>
+                                {steps.map((label, index) => {
+                                    const stepProps = {};
+                                    const labelProps = {};
+                                    if (isStepOptional(index)) {
+                                        labelProps.optional = (
+                                            <label variant="caption"></label>
+                                        );
+                                    }
+                                    return (
+                                        <Step key={label} {...stepProps}>
+                                            <StepLabel {...labelProps}>{label}</StepLabel>
+                                        </Step>
+                                    );
+                                })}
+                            </Stepper>
+                            {activeStep === steps.length ? (
+                                <React.Fragment>
+                                    <label style={{ marginTop: "50px" }}>
+                                        모든 과정이 끝났습니다! <br /> Create를 누르면 노래가 생성됩니다.
+                                    </label>
+                                    <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                                        <Box sx={{ flex: "1 1 auto" }} />
+                                        <button onClick={handleReset}>Reset</button>
+                                        <button onClick={MusicCreate}>Create</button>
 
-const handleRadioChange = (event) => {
-    const newSelectedValues = [...selectedValues];
-    newSelectedValues[activeStep] = event.target.value;
-    setSelectedValues(newSelectedValues);
-};
+                                    </Box>
+                                </React.Fragment>
+                            ) : (
+                                <React.Fragment>
+                                    <label>
 
-const instChange = (e) => {
-    setInst(e);
-    console.log(e);
-}
+                                    </label>
+                                    <hr style={{ borderTop: "5px solid gray", borderRadius: "10px" }}></hr>
 
-const MusicCreate = (event) => {
-    CreateNetwork.getMusicData(musicData);
+                                    {/* Content 란 */}
 
-    // event.preventDefault();
+                                    <FormControl className="FormControl">
+                                    <label className="content">{getStepContent(activeStep)}</label>
 
-    // const src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
-    // navigate('/music', { state: { src } });
-}
 
-return (
-    <Box className="wrapper" >
-        <Stepper activeStep={activeStep}>
-            {steps.map((label, index) => {
-                const stepProps = {};
-                const labelProps = {};
-                if (isStepOptional(index)) {
-                    labelProps.optional = (
-                        <Typography variant="caption"></Typography>
-                    );
-                }
-                return (
-                    <Step key={label} {...stepProps}>
-                        <StepLabel {...labelProps}>{label}</StepLabel>
-                    </Step>
-                );
-            })}
-        </Stepper>
-        {activeStep === steps.length ? (
-            <React.Fragment>
-                <Typography sx={{ mt: 2, mb: 1 }} style={{marginTop:"50px"}}>
-                    모든 과정이 끝났습니다! <br /> Create를 누르면 노래가 생성됩니다.
-                </Typography>
-                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                    <Box sx={{ flex: "1 1 auto" }} />
-                    <Button onClick={handleReset}>Reset</Button>
-                    <Button onClick={MusicCreate}>Create</Button>
+                                        <RadioGroup
+                                            aria-labelledby="demo-radio-buttons-group-label"
+                                            defaultValue="mood"
+                                            name="radio-buttons-group"
+                                            onChange={(event) => handleRadioChange(event)}
+                                        >
 
-                </Box>
-            </React.Fragment>
-        ) : (
-            <React.Fragment>
-                <Typography sx={{ mt: 2, mb: 1 }}>
+                                            {activeStep === 0 ? [
+                                                <>
+                                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
+                                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
+                                                </>
+                                            ] : activeStep === 1 && lastData[0] === '0' ? [
+                                                <>
+                                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
+                                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
+                                                </>
+                                            ] : activeStep === 1 && lastData[0] === '1' ? [
+                                                <>
+                                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content3} />
+                                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content4} />
+                                                </>
+                                            ] : activeStep === 2 ? [
+                                                <>
+                                                    <Instrument onChange={instChange} />
+                                                    {/* <InstrumentForm2 /> */}
+                                                </>
+                                            ] : activeStep === 3 ? [
+                                                <>
+                                                    <Box sx={{ width: 300 }}>
+                                                        <Slider
+                                                            aria-label="bpm"
+                                                            defaultValue={50}
+                                                            onChange={onBpmChanged}
+                                                            valueLabelDisplay="auto"
+                                                            step={10}
+                                                            marks
+                                                            min={50}
+                                                            max={100}
+                                                        />
+                                                    </Box>
+                                                </>
+                                            ] : activeStep === 4 ? [
+                                                <>
+                                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
+                                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
+                                                </>
+                                            ] : null
+                                            }
 
-                </Typography>
-                <hr style={{borderTop: "10px solid #d29f8a", borderRadius: "10px", marginTop:"30px"}}></hr>
+                                        </RadioGroup>
+                                    </FormControl>
 
-                {/* Content 란 */}
-                <Typography style={{ margin: "30px", marginBottom: "50px"}}>{getStepContent(activeStep)}</Typography>
-
-                <FormControl>
-
-                    <RadioGroup
-                        aria-labelledby="demo-radio-buttons-group-label"
-                        defaultValue="mood"
-                        name="radio-buttons-group"
-                        onChange={(event) => handleRadioChange(event)}
-                    >
-
-                        {activeStep === 0 ? [
-                            <>
-                                <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
-                                <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
-                            </>
-                        ] : activeStep === 1 && lastData[0] === '0' ? [
-                            <>
-                                <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
-                                <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
-                            </>
-                        ] : activeStep === 1 && lastData[0] === '1' ? [
-                            <>
-                                <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content3} />
-                                <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content4} />
-                            </>
-                        ] : activeStep === 2 ? [
-                            <>
-                                <Instrument onChange = {instChange} />
-                                {/* <InstrumentForm2 /> */}
-                            </>
-                        ] : activeStep === 3 ? [
-                            <>
-                                <Box sx={{ width: 300 }}>
-                                    <Slider
-                                        aria-label="bpm"
-                                        defaultValue={50}
-                                        onChange={onBpmChanged}
-                                        valueLabelDisplay="auto"
-                                        step={10}
-                                        marks
-                                        min={50}
-                                        max={100}
-                                    />
-                                </Box>
-                            </>
-                        ] : activeStep === 4 ? [
-                            <>
-                                <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
-                                <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
-                            </>
-                        ] : null
-                        }
-
-                    </RadioGroup>
-                </FormControl>
-
-                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                    <Button
-                        color="inherit"
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        sx={{ mr: 1 }}
-                    >
-                        Back
-                    </Button>
-                    <Box sx={{ flex: "1 1 auto" }} />
-                    {isStepOptional(activeStep) && (
-                        <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                            Skip
-                        </Button>
-                    )}
-                    <Button onClick={handleNext}>
-                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                    </Button>
-                </Box>
-            </React.Fragment>
-        )}
-    </Box>
-);
+                                    <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                                        <button
+                                            color="inherit"
+                                            disabled={activeStep === 0}
+                                            onClick={handleBack}
+                                            sx={{ mr: 1 }}
+                                        >
+                                            Back
+                                        </button>
+                                        <Box sx={{ flex: "1 1 auto" }} />
+                                        {isStepOptional(activeStep) && (
+                                            <button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+                                                Skip
+                                            </button>
+                                        )}
+                                        <button onClick={handleNext}>
+                                            {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                                        </button>
+                                    </Box>
+                                </React.Fragment>
+                            )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }

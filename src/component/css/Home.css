@@ -1,0 +1,4 @@
+.wrapper {
+    display: flex; /* flex를 적용한 값입니다 */
+    flex-direction: column; /* flex-col을 적용한 값입니다 */
+}
