@@ -1,8 +1,24 @@
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
+import SongService from "../service/SongService";
 
 export default function Home(props) {
-  const { isLoading, songs } = props;
+  const [isLoading, setIsLoading] = useState(true);
+  const [songs, setSongs] = useState([]);
+
+  useEffect(() => {
+    SongService.getSongs()
+        .then(function (response) {
+          // handle success
+          setSongs(response.data);
+          setIsLoading(false);
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
+
+  }, []);
 
   return (
     <>
@@ -47,7 +63,7 @@ export default function Home(props) {
                   ) : (
                     <>
                       {songs.map((song) => (
-                        <tr key={song.id} className="bg-gray-900">
+                        <tr key={song.fileName}  className="bg-gray-900">
                           <td className="px-6 py-4 whitespace-nowrap text-lg font-medium text-white">
                             {song.fileName}
                           </td>

@@ -6,11 +6,9 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { FormControl, FormControlLabel, Radio, RadioGroup, Slider } from "@mui/material";
 import { Instrument } from "./Instrument";
-import * as CreateNetwork from "../network/CreateNetwork";
 import SongService from "../service/SongService";
 import {useEffect} from "react";
 import {useHistory} from "react-router-dom";
-import App from "../App";
 
 const steps = [
     "음악 분위기 선택",
@@ -32,6 +30,8 @@ const getStepContent = (step) => {
             return "bpm을 정해주세요.";
         case 4:
             return "음의 높낮이를 결정해주세요.";
+        default:
+            return
     }
 };
 
@@ -78,7 +78,7 @@ export default function Generate({ createSong }) {
                 history.push("/signin");
                 console.log(err);
             })
-    }, []);
+    }, [history]);
 
 
     let lastData = musicData;
@@ -89,7 +89,7 @@ export default function Generate({ createSong }) {
     };
 
     const isStepOptional = (step) => {
-        return step === 0, 1;
+        return step === 0;
     };
 
     const isStepSkipped = (step) => {

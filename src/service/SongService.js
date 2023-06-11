@@ -1,5 +1,4 @@
 import axios from 'axios';
-import App from "../App.js";
 
 const BACKEND_URL = "http://ykh8746.iptime.org:8080/song";
 
@@ -48,7 +47,8 @@ class SongService {
 
     }
 
-    deleteSong(fileName) {
+    deleteSong(song) {
+        const fileName = song.fileName;
         const token = localStorage.getItem("USER")
         return axios.delete(`${BACKEND_URL}/${fileName}`, {
             headers: {
@@ -58,5 +58,5 @@ class SongService {
     }
 
 }
-
-export default new SongService();
+const songService = new SongService();
+export default songService;

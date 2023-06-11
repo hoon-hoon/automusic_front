@@ -26,32 +26,12 @@ import MyMusic from "./component/MyMusic";
 
 function App() {
 
-    const BACKEND_URL = "http://ykh8746.iptime.org:8080/song";
-    const [isPlaying, setPlaying] = useState(false);
-    const [songs, setSongs] = useState([]);
     const [currentSong, setCurrentSong] = useState({
         fileName: 'sample',
         userId: 'sample'
     });
-    const [queue, setQueue] = useState([]);
-    const [history, setHistory] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const [isLoggedin, setIsLoggedin] = useState(false);
 
-    //Load the songs from the backend when the page first loads
-    useEffect(() => {
-        SongService.getSongs()
-            .then(function (response) {
-                // handle success
-                setSongs(response.data);
-                setIsLoading(false);
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            });
-
-    }, []);
     useEffect(() => {
         const user = localStorage.getItem("USER");
         if (!user) {
@@ -63,116 +43,22 @@ function App() {
             console.log("성공");
         }
     }, []);
-    //every time the currentSong is updated, play that song.
-    useEffect(() => {
-        play();
-    }, [currentSong]);
-
-    function audio(){
-        return document.querySelector("audio");
-    }
-
-    function play() {
-        audio().play().then(r => console.log("Playing song."));
-        setPlaying(true);
-    }
-
-    function pauseSong(){
-        audio().pause();
-        setPlaying(false);
-    }
-
-    function restartSong() {
-        audio().currentTime = 0;
-    }
-
-    function refreshSongs(){
-
-        setIsLoading(true);
-
-        SongService.getSongs()
-            .then(function (response) {
-                setSongs(response.data);
-                setIsLoading(false);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-
-    }
-
-    function updateSong(updatedSong){
-
-        setSongs(songs.map(function (song) {
-            if (song.id === updatedSong.id){
-                return updatedSong;
-            }
-            return song;
-        }));
-
-    }
-
-    //go to the next song if there is one
-    function nextSong() {
-
-        if (queue.length > 0) {
-            let nextSong = queue[0];
-            console.log("Going to next song: " + nextSong);
-            setHistory([...history, currentSong]);
-            setCurrentSong(nextSong);
-            let currentQueue = [...queue];
-            currentQueue.shift();
-            setQueue(currentQueue);
-        }else{
-            //pick a random song to play
-            const randIndex = Math.floor(Math.random() * songs.length);
-            setHistory([...history, currentSong]);
-            setCurrentSong(songs[randIndex]);
-        }
-    }
-
-    //go to the prev song if there is one
-    function prevSong() {
-
-        //if within 5 seconds, go to last song
-        if (document.querySelector("audio").currentTime <= 5){
-            if (history.length > 0) {
-                let currentHistory = history;
-                let lastSong = history.pop();
-                setHistory(currentHistory);
-                console.log("Going to prev song: " + lastSong);
-                setQueue([currentSong, ...queue]);
-                setCurrentSong(lastSong);
-            }
-        }else{
-            restartSong();
-        }
-
-    }
 
     function playSongHandler(song) {
         setCurrentSong(song);
     }
 
-    function queueSongHandler(songKey) {
-        setQueue([...queue, songKey]);
-    }
     const logoutClicked = () => {
         localStorage.removeItem("USER");
     }
 
     function handleCreateSong(musicDto) {
-
-        // const fileName = localStorage.getItem("MUSIC");
-        // console.log(fileName);
-        
         SongService.createSong(musicDto)
             .then((song) => {
                 playSongHandler(song)
                 console.log(currentSong);
             })
             .catch((error) => {
-                // 에러 처리
                 console.log("fail");
             });
     }
@@ -180,11 +66,10 @@ function App() {
 
         <Router>
             <div className="mx-auto md:max-w-4xl mt-50">
-
-                <div className="bg-gray-900 text-center m-5 rounded-3xl pt-3">
+                <div className="bg-gray-900 text-center m-5 rounded-3xl pt-3 h-fit">
                     <h1 className="text-6xl font-extrabold text-white">Auto Music</h1>
-                    <img src="https://media.tenor.com/HJvqN2i4Zs4AAAAi/milk-and-mocha-cute.gif"
-                         className="mx-auto p-4"/>
+                    <img alt="" src="https://media.tenor.com/HJvqN2i4Zs4AAAAi/milk-and-mocha-cute.gif"
+                        className="mx-auto p-4" />
                     <div className="inline-flex pb-2 space-x-2">
 
                         <Link to="/allMusic">
@@ -228,22 +113,20 @@ function App() {
                             </Link>
                         )}    
                     </div>
-                    <audio onEnded={nextSong} onPause={() => setPlaying(false)} onPlay={() => setPlaying(true)} className="mx-auto w-full"
-                           src={`http://ykh8746.iptime.org:8080/static/music/${currentSong.userId}_${currentSong.fileName}.wav`} autoPlay={true} controls>
-                        <source type="audio/mpeg"/>
+                </div>
+                <div className="sticky top-0">
+                    <audio className="mx-auto w-full sticky top-0" autoPlay={true}
+                           src={`http://ykh8746.iptime.org:8080/static/music/${currentSong.userId}_${currentSong.fileName}.wav`} controls>
+                        <source type="audio/mpeg" />
                         Your browser does not support the audio element.
                     </audio>
                 </div>
-
                 <Switch>
                     <Route path="/generate">
                         <Generate createSong={handleCreateSong} />
                     </Route>
-                    {/*<Route path="/song/:id">*/}
-                    {/*    <EditSong updateSong={updateSong} refreshSongs={refreshSongs} />*/}
-                    {/*</Route>*/}
                     <Route path="/myMusic">
-                        <MyMusic isLoading={isLoading}></MyMusic>
+                        <MyMusic playSongButton={playSongHandler}></MyMusic>
                     </Route>
                     <Route path="/signin">
                         <Login></Login>
@@ -252,15 +135,10 @@ function App() {
                         <SignUp></SignUp>
                     </Route>
                     <Route path="/allMusic">
-                        <Home updateSong={updateSong} songs={songs} isLoading={isLoading} queue={queue} currentSong={currentSong} playSongButton={playSongHandler} queueSong={queueSongHandler} setQueue={setQueue} />
+                        <Home  playSongButton={playSongHandler} />
                     </Route>
                 </Switch>
-
             </div>
-
-            {/*<div className="mx-auto w-3/6">*/}
-            {/*    <Player isPlaying={isPlaying} play={play} currentSong={currentSong} queue={queue} playSongButton={playSongHandler} setQueue={setQueue} nextSong={nextSong} prevSong={prevSong} pauseSong={pauseSong} />*/}
-            {/*</div>*/}
         </Router>
 
     );
