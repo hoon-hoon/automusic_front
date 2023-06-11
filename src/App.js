@@ -46,6 +46,7 @@ function App() {
 
     function playSongHandler(song) {
         setCurrentSong(song);
+        console.log(currentSong);
     }
 
     const logoutClicked = () => {
@@ -55,9 +56,10 @@ function App() {
 
     function handleCreateSong(musicDto) {
         SongService.createSong(musicDto)
-            .then((song) => {
+            .then((res) => {
+                const song = res.data
                 playSongHandler(song)
-                console.log(currentSong);
+                console.log(song);
             })
             .catch((error) => {
                 console.log("fail");
@@ -125,7 +127,7 @@ function App() {
                 </div>
                 <Switch>
                     <Route path="/generate">
-                        <Generate createSong={handleCreateSong} />
+                        <Generate crtSong={playSongHandler} />
                         {/* <Generate /> */}
                     </Route>
                     <Route path="/myMusic">

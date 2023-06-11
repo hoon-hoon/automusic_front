@@ -7,8 +7,8 @@ import StepLabel from "@mui/material/StepLabel";
 import { FormControl, FormControlLabel, Radio, RadioGroup, Slider, Typography } from "@mui/material";
 import { Instrument } from "./Instrument";
 import SongService from "../service/SongService";
-import {useEffect} from "react";
-import {useHistory} from "react-router-dom";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 const steps = [
     "음악 분위기 선택",
@@ -63,7 +63,7 @@ const detail = [
     },
 ];
 
-export default function Generate({ createSong }) {
+export default function Generate(props) {
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
     const [musicData, setMusicData] = React.useState([""]);
@@ -74,7 +74,7 @@ export default function Generate({ createSong }) {
 
     useEffect(() => {
         SongService.getMySong()
-            .catch((err)=>{
+            .catch((err) => {
                 history.push("/signin");
                 console.log(err);
             })
@@ -139,18 +139,18 @@ export default function Generate({ createSong }) {
         if (!isStepOptional(activeStep)) {
             throw new Error("You can't skip a step that isn't optional.");
         }
-    
+
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setSkipped((prevSkipped) => {
             const newSkipped = new Set(prevSkipped.values());
             newSkipped.add(activeStep);
             return newSkipped;
         });
-    
+
         const newSelectedValues = [...selectedValues];
         newSelectedValues[activeStep] = ["skip"];
     };
-      
+
 
     const handleReset = () => {
         console.log(musicData);
@@ -174,131 +174,136 @@ export default function Generate({ createSong }) {
     const MusicCreate = (event) => {
         // CreateNetwork.getMusicData(musicData);
         // SongService.createSong(musicData);
-        createSong(musicData);
+        // props.createSong(musicData);
 
-        // event.preventDefault();
-
-        // const src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
-        // navigate('/music', { state: { src } });
+        SongService.createSong(musicData)
+            .then((res) => {
+                console.log(res);
+                const song = res.data;
+                props.crtSong(song);
+                console.log(song);
+            })
+            .catch((error) => {
+                console.log("fail", error);
+            });
     }
+
 
     return (
         <div className="flex flex-col wrapper">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 border border-gray">
                     <div className="shadow overflow-hidden border-gray-200 sm:rounded-lg text-align-last-center">
-                            <Stepper activeStep={activeStep}>
-                                {steps.map((label, index) => {
-                                    const stepProps = {};
-                                    const labelProps = {};
-                                    if (isStepOptional(index)) {
-                                        labelProps.optional = (
-                                            <Typography variant="caption"></Typography>
-                                        );
-                                    }
-                                    return (
-                                        <Step key={label} {...stepProps}>
-                                            <StepLabel {...labelProps}>{label}</StepLabel>
-                                        </Step>
+                        <Stepper activeStep={activeStep}>
+                            {steps.map((label, index) => {
+                                const stepProps = {};
+                                const labelProps = {};
+                                if (isStepOptional(index)) {
+                                    labelProps.optional = (
+                                        <Typography variant="caption"></Typography>
                                     );
-                                })}
-                            </Stepper>
-                            {activeStep === steps.length ? (
-                                <React.Fragment>
-                                    <label style={{ marginTop: "50px", placeContent: "center" }}>
-                                        모든 과정이 끝났습니다! <br /> Create를 누르면 노래가 생성됩니다.
-                                    </label>
-                                    <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                                        <Box sx={{ flex: "1 1 auto" }} />
-                                        <button onClick={handleReset}>Reset</button>
-                                        <button onClick={MusicCreate}>Create</button>
+                                }
+                                return (
+                                    <Step key={label} {...stepProps}>
+                                        <StepLabel {...labelProps}>{label}</StepLabel>
+                                    </Step>
+                                );
+                            })}
+                        </Stepper>
+                        {activeStep === steps.length ? (
+                            <React.Fragment>
+                                <label style={{ marginTop: "50px", placeContent: "center" }}>
+                                    모든 과정이 끝났습니다! <br /> Create를 누르면 노래가 생성됩니다.
+                                </label>
+                                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                                    <Box sx={{ flex: "1 1 auto" }} />
+                                    <button onClick={handleReset}>Reset</button>
+                                    <button onClick={MusicCreate}>Create</button>
+                                </Box>
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
 
-                                    </Box>
-                                </React.Fragment>
-                            ) : (
-                                <React.Fragment>
+                                <hr style={{ borderTop: "5px solid gray", borderRadius: "10px" }}></hr>
 
-                                    <hr style={{ borderTop: "5px solid gray", borderRadius: "10px" }}></hr>
+                                {/* Content 란 */}
 
-                                    {/* Content 란 */}
-
-                                    <FormControl className="FormControl">
+                                <FormControl className="FormControl">
                                     <label className="content">{getStepContent(activeStep)}</label>
 
 
-                                        <RadioGroup
-                                            aria-labelledby="demo-radio-buttons-group-label"
-                                            defaultValue="mood"
-                                            name="radio-buttons-group"
-                                            onChange={(event) => handleRadioChange(event)}
-                                        >
+                                    <RadioGroup
+                                        aria-labelledby="demo-radio-buttons-group-label"
+                                        defaultValue="mood"
+                                        name="radio-buttons-group"
+                                        onChange={(event) => handleRadioChange(event)}
+                                    >
 
-                                            {activeStep === 0 ? [
-                                                <>
-                                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
-                                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
-                                                </>
-                                            ] : activeStep === 1 && lastData[0] === '0' ? [
-                                                <>
-                                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
-                                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
-                                                </>
-                                            ] : activeStep === 1 && lastData[0] === '1' ? [
-                                                <>
-                                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content3} />
-                                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content4} />
-                                                </>
-                                            ] : activeStep === 2 ? [
-                                                <>
-                                                    <Instrument onChange={instChange} />
-                                                    {/* <InstrumentForm2 /> */}
-                                                </>
-                                            ] : activeStep === 3 ? [
-                                                <>
-                                                    <Box sx={{ width: 300 }}>
-                                                        <Slider
-                                                            aria-label="bpm"
-                                                            defaultValue={50}
-                                                            onChange={onBpmChanged}
-                                                            valueLabelDisplay="auto"
-                                                            step={10}
-                                                            marks
-                                                            min={50}
-                                                            max={100}
-                                                        />
-                                                    </Box>
-                                                </>
-                                            ] : activeStep === 4 ? [
-                                                <>
-                                                    <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
-                                                    <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
-                                                </>
-                                            ] : null
-                                            }
+                                        {activeStep === 0 ? [
+                                            <>
+                                                <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
+                                                <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
+                                            </>
+                                        ] : activeStep === 1 && lastData[0] === '0' ? [
+                                            <>
+                                                <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
+                                                <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
+                                            </>
+                                        ] : activeStep === 1 && lastData[0] === '1' ? [
+                                            <>
+                                                <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content3} />
+                                                <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content4} />
+                                            </>
+                                        ] : activeStep === 2 ? [
+                                            <>
+                                                <Instrument onChange={instChange} />
+                                                {/* <InstrumentForm2 /> */}
+                                            </>
+                                        ] : activeStep === 3 ? [
+                                            <>
+                                                <Box sx={{ width: 300 }}>
+                                                    <Slider
+                                                        aria-label="bpm"
+                                                        defaultValue={50}
+                                                        onChange={onBpmChanged}
+                                                        valueLabelDisplay="auto"
+                                                        step={10}
+                                                        marks
+                                                        min={50}
+                                                        max={100}
+                                                    />
+                                                </Box>
+                                            </>
+                                        ] : activeStep === 4 ? [
+                                            <>
+                                                <FormControlLabel value="0" control={<Radio />} label={detail[activeStep].content} />
+                                                <FormControlLabel value="1" control={<Radio />} label={detail[activeStep].content2} />
+                                            </>
+                                        ] : null
+                                        }
 
-                                        </RadioGroup>
-                                    </FormControl>
+                                    </RadioGroup>
+                                </FormControl>
 
-                                    <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                                        <button
-                                            color="inherit"
-                                            disabled={activeStep === 0}
-                                            onClick={handleBack}
-                                        >
-                                            Back
+                                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                                    <button
+                                        disabled={activeStep === 0}
+                                        onClick={handleBack}
+                                    >
+                                        Back
+                                    </button>
+                                    <Box sx={{ flex: "1 1 auto" }} />
+                                    {isStepOptional(activeStep) && (
+                                        <button style={{ marginRight: "10px" }} onClick={handleSkip}>
+                                            Skip
                                         </button>
-                                        <Box sx={{ flex: "1 1 auto" }} />
-                                        {isStepOptional(activeStep) && (
-                                            <button color="inherit" onClick={handleSkip}>
-                                                Skip
-                                            </button>
-                                        )}
-                                        <button onClick={handleNext}>
-                                            {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                                        </button>
-                                    </Box>
-                                </React.Fragment>
-                            )}
+                                    )}
+                                    <button onClick={handleNext}>
+                                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                                    </button>
+                                </Box>
+                            </React.Fragment>
+                        )}
                     </div>
                 </div>
             </div>

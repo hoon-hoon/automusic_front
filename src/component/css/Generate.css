@@ -97,8 +97,15 @@ label {
     color: white !important;
 }
 
+.css-1sn4lm3-MuiTypography-root {
+    color: white !important;
+}
 
 /* 스텝퍼 스텝번호 체크 후 */
 .css-117w1su-MuiStepIcon-text {
     fill: white !important;
+}
+
+.css-187mznn-MuiSlider-root {
+    color: white !important;
 }
