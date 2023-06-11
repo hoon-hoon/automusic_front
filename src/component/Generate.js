@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import { FormControl, FormControlLabel, Radio, RadioGroup, Slider } from "@mui/material";
+import { FormControl, FormControlLabel, Radio, RadioGroup, Slider, Typography } from "@mui/material";
 import { Instrument } from "./Instrument";
 import SongService from "../service/SongService";
 import {useEffect} from "react";
@@ -139,17 +139,18 @@ export default function Generate({ createSong }) {
         if (!isStepOptional(activeStep)) {
             throw new Error("You can't skip a step that isn't optional.");
         }
-
+    
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setSkipped((prevSkipped) => {
             const newSkipped = new Set(prevSkipped.values());
             newSkipped.add(activeStep);
             return newSkipped;
         });
-
+    
         const newSelectedValues = [...selectedValues];
         newSelectedValues[activeStep] = ["skip"];
     };
+      
 
     const handleReset = () => {
         console.log(musicData);
@@ -192,7 +193,7 @@ export default function Generate({ createSong }) {
                                     const labelProps = {};
                                     if (isStepOptional(index)) {
                                         labelProps.optional = (
-                                            <label variant="caption"></label>
+                                            <Typography variant="caption"></Typography>
                                         );
                                     }
                                     return (
@@ -204,7 +205,7 @@ export default function Generate({ createSong }) {
                             </Stepper>
                             {activeStep === steps.length ? (
                                 <React.Fragment>
-                                    <label style={{ marginTop: "50px" }}>
+                                    <label style={{ marginTop: "50px", placeContent: "center" }}>
                                         모든 과정이 끝났습니다! <br /> Create를 누르면 노래가 생성됩니다.
                                     </label>
                                     <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
@@ -216,9 +217,7 @@ export default function Generate({ createSong }) {
                                 </React.Fragment>
                             ) : (
                                 <React.Fragment>
-                                    <label>
 
-                                    </label>
                                     <hr style={{ borderTop: "5px solid gray", borderRadius: "10px" }}></hr>
 
                                     {/* Content 란 */}

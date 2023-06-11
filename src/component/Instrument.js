@@ -32,7 +32,7 @@ export const Instrument = ({ onChange }) => {
 
   return (
     <Box>
-      <FormControl className="FormControl">
+      <FormControl className="InstForm">
         <Select
           name="inst1"
           labelId="demo-simple-select-label-1"
@@ -45,7 +45,7 @@ export const Instrument = ({ onChange }) => {
           {instData}
         </Select>
       </FormControl>
-      <FormControl className="FormControl">
+      <FormControl className="InstForm">
         <Select
           name="inst2"
           labelId="demo-simple-select-label-2"
@@ -58,7 +58,7 @@ export const Instrument = ({ onChange }) => {
           {instData}
         </Select>
       </FormControl>
-      <FormControl className="FormControl">
+      <FormControl className="InstForm">
         <Select
           name="inst3"
           labelId="demo-simple-select-label-3"
@@ -71,7 +71,7 @@ export const Instrument = ({ onChange }) => {
           {instData}
         </Select>
       </FormControl>
-      <FormControl className="FormControl">
+      <FormControl className="InstForm">
         <Select
           name="inst4"
           labelId="demo-simple-select-label-4"
@@ -84,7 +84,7 @@ export const Instrument = ({ onChange }) => {
           {instData}
         </Select>
       </FormControl>
-      <FormControl className="FormControl">
+      <FormControl className="InstForm">
         <Select
           name="inst5"
           labelId="demo-simple-select-label-4"

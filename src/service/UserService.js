@@ -13,6 +13,8 @@ class UserService {
             .then(response => {
                 history.push("/myMusic");
                 localStorage.setItem("USER", response.data.token);
+                window.location.reload();
+
             })
             .catch(err => {
                 alert("로그인 실패")
@@ -21,12 +23,12 @@ class UserService {
 
     }
 
-    signUp(userId, password, nickname,history){
+    signUp(userId, password, nickname, history) {
         axios.post(`${BACKEND_URL}/signUp`,
             {
-                userId : userId,
-                pw : password,
-                nickname : nickname
+                userId: userId,
+                pw: password,
+                nickname: nickname
             })
             .then((response) => {
                 alert("회원가입 성공!!");
@@ -34,7 +36,7 @@ class UserService {
             })
             .catch((err) => {
                 let msg = err.response.data.forEach(
-                    item => { msg += `${item.msg}\n`;}
+                    item => { msg += `${item.msg}\n`; }
                 )
                 alert(msg);
             })

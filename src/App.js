@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import SongService from "./service/SongService";
 import Generate from './component/Generate';
 import { RiFolderMusicLine } from "react-icons/ri";
@@ -50,6 +50,7 @@ function App() {
 
     const logoutClicked = () => {
         localStorage.removeItem("USER");
+        window.location.reload();
     }
 
     function handleCreateSong(musicDto) {
@@ -74,7 +75,7 @@ function App() {
 
                         <Link to="/allMusic">
                             <button type="button"
-                                    className=" w-32 inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
+                                className=" w-32 inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
                                 <MdQueueMusic className=" text-lg mr-2" />
                                 All Music
                             </button>
@@ -82,7 +83,7 @@ function App() {
 
                         <Link to="/myMusic">
                             <button type="button"
-                                    className=" w-32 inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
+                                className=" w-32 inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
                                 <RiFolderMusicLine className=" text-lg mr-2" />
                                 My Music
                             </button>
@@ -90,12 +91,21 @@ function App() {
 
                         <Link to="/generate">
                             <button type="button"
-                                    className=" w-32 inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
+                                className=" w-32 inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
                                 <MdPlaylistAdd className=" text-lg mr-2" />
                                 Generate
                             </button>
                         </Link>
                         {isLoggedin ? (
+
+                            <Link to="/">
+                                <button type="button" onClick={logoutClicked}
+                                    className=" w-32 inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
+                                    <FaRegUserCircle className=" text-lg mr-2" />
+                                    Logout
+                                </button>
+                            </Link>
+                        ) : (
                             <Link to="/signIn">
                                 <button type="button"
                                     className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
@@ -103,20 +113,12 @@ function App() {
                                     Login
                                 </button>
                             </Link>
-                        ) : (
-                            <Link to="/">
-                                <button type="button" onClick={logoutClicked}
-                                    className=" w-32 inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
-                                <FaRegUserCircle className=" text-lg mr-2" />
-                                    Logout
-                                </button>
-                            </Link>
-                        )}    
+                        )}
                     </div>
                 </div>
                 <div className="sticky top-0">
                     <audio className="mx-auto w-full sticky top-0" autoPlay={true}
-                           src={`http://ykh8746.iptime.org:8080/static/music/${currentSong.userId}_${currentSong.fileName}.wav`} controls>
+                        src={`http://ykh8746.iptime.org:8080/static/music/${currentSong.userId}_${currentSong.fileName}.wav`} controls>
                         <source type="audio/mpeg" />
                         Your browser does not support the audio element.
                     </audio>
@@ -135,7 +137,7 @@ function App() {
                         <SignUp></SignUp>
                     </Route>
                     <Route path="/allMusic">
-                        <Home  playSongButton={playSongHandler} />
+                        <Home playSongButton={playSongHandler} />
                     </Route>
                 </Switch>
             </div>
