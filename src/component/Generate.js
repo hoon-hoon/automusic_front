@@ -89,7 +89,7 @@ export default function Generate({ createSong }) {
     };
 
     const isStepOptional = (step) => {
-        return step === 0;
+        return step === 0, 1;
     };
 
     const isStepSkipped = (step) => {
@@ -183,7 +183,7 @@ export default function Generate({ createSong }) {
     }
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col wrapper">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 border border-gray">
                     <div className="shadow overflow-hidden border-gray-200 sm:rounded-lg text-align-last-center">
@@ -284,13 +284,12 @@ export default function Generate({ createSong }) {
                                             color="inherit"
                                             disabled={activeStep === 0}
                                             onClick={handleBack}
-                                            sx={{ mr: 1 }}
                                         >
                                             Back
                                         </button>
                                         <Box sx={{ flex: "1 1 auto" }} />
                                         {isStepOptional(activeStep) && (
-                                            <button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+                                            <button color="inherit" onClick={handleSkip}>
                                                 Skip
                                             </button>
                                         )}

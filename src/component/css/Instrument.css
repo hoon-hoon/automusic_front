@@ -8,10 +8,15 @@
     background-color: white;
 }
 
-.css-11u53oe-MuiSelect-select-.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input-input-MuiOutlinedInput-input {
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
     width: 100px !important; 
 }
 
 #demo-simple-select {
     width: 100%;
+}
+
+.css-0 {
+    display: flex;
+    gap: 10px;
 }

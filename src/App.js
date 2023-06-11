@@ -126,6 +126,7 @@ function App() {
                 <Switch>
                     <Route path="/generate">
                         <Generate createSong={handleCreateSong} />
+                        {/* <Generate /> */}
                     </Route>
                     <Route path="/myMusic">
                         <MyMusic playSongButton={playSongHandler}></MyMusic>

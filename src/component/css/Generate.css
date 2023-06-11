@@ -1,5 +1,6 @@
 .wrapper {
-    margin-bottom: 50px;
+    margin-top: 50px;
+    margin-bottom: 100px;
 }
 
 Button {
@@ -34,7 +35,7 @@ label {
     text-align: left; /* text-left을 적용한 값입니다 */
     font-size: 1.125rem; /* text-lg를 적용한 값입니다 */
     font-weight: 500; /* font-medium을 적용한 값입니다 */
-    color: #888888; /* text-gray-500을 적용한 값입니다 */
+    color: white; /* text-gray-500을 적용한 값입니다 */
     text-transform: uppercase; /* uppercase을 적용한 값입니다 */
     letter-spacing: 0.05em; /* tracking-wider를 적용한 값입니다 */
 }
@@ -49,6 +50,7 @@ label {
 
 .css-1nrlq1o-MuiFormControl-root {
     width: auto !important;
+    margin-top: 5% !important;
 }
 
 .content {
@@ -64,7 +66,7 @@ label {
 
 /* 스텝퍼 내부 라벨 */
 .css-1hv8oq8-MuiStepLabel-label {
-    color: white !important;
+    color: #888888 !important;
     grid-column: span 3; /* col-span-3을 적용한 값입니다 */
     padding: 1.5rem; /* px-6 py-3을 적용한 값입니다 */
     text-align: left; /* text-left을 적용한 값입니다 */
@@ -75,7 +77,9 @@ label {
     letter-spacing: 0.05em; /* tracking-wider를 적용한 값입니다 */
 }
 
-.css-1hv8oq8-MuiStepLabel-label.Mui-completed,
+.css-1hv8oq8-MuiStepLabel-label.Mui-completed {
+    color: #888888 !important;
+}
 .css-1hv8oq8-MuiStepLabel-label.Mui-active {
     color: white !important;
 }
