@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import SongService from "./service/SongService";
 import Generate from './component/Generate';
 import { RiFolderMusicLine } from "react-icons/ri";
 import { MdQueueMusic, MdPlaylistAdd } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
+
 
 import {
     BrowserRouter as Router,
@@ -51,7 +52,6 @@ function App() {
             });
 
     }, []);
-
     useEffect(() => {
         const user = localStorage.getItem("USER");
         if (!user) {
@@ -63,13 +63,12 @@ function App() {
             console.log("성공");
         }
     }, []);
-
     //every time the currentSong is updated, play that song.
     useEffect(() => {
         play();
     }, [currentSong]);
 
-    function audio() {
+    function audio(){
         return document.querySelector("audio");
     }
 
@@ -78,7 +77,7 @@ function App() {
         setPlaying(true);
     }
 
-    function pauseSong() {
+    function pauseSong(){
         audio().pause();
         setPlaying(false);
     }
@@ -87,7 +86,7 @@ function App() {
         audio().currentTime = 0;
     }
 
-    function refreshSongs() {
+    function refreshSongs(){
 
         setIsLoading(true);
 
@@ -102,10 +101,10 @@ function App() {
 
     }
 
-    function updateSong(updatedSong) {
+    function updateSong(updatedSong){
 
         setSongs(songs.map(function (song) {
-            if (song.id === updatedSong.id) {
+            if (song.id === updatedSong.id){
                 return updatedSong;
             }
             return song;
@@ -124,7 +123,7 @@ function App() {
             let currentQueue = [...queue];
             currentQueue.shift();
             setQueue(currentQueue);
-        } else {
+        }else{
             //pick a random song to play
             const randIndex = Math.floor(Math.random() * songs.length);
             setHistory([...history, currentSong]);
@@ -136,7 +135,7 @@ function App() {
     function prevSong() {
 
         //if within 5 seconds, go to last song
-        if (document.querySelector("audio").currentTime <= 5) {
+        if (document.querySelector("audio").currentTime <= 5){
             if (history.length > 0) {
                 let currentHistory = history;
                 let lastSong = history.pop();
@@ -145,7 +144,7 @@ function App() {
                 setQueue([currentSong, ...queue]);
                 setCurrentSong(lastSong);
             }
-        } else {
+        }else{
             restartSong();
         }
 
@@ -158,7 +157,6 @@ function App() {
     function queueSongHandler(songKey) {
         setQueue([...queue, songKey]);
     }
-
     const logoutClicked = () => {
         localStorage.removeItem("USER");
     }
@@ -186,33 +184,32 @@ function App() {
                 <div className="bg-gray-900 text-center m-5 rounded-3xl pt-3">
                     <h1 className="text-6xl font-extrabold text-white">Auto Music</h1>
                     <img src="https://media.tenor.com/HJvqN2i4Zs4AAAAi/milk-and-mocha-cute.gif"
-                        className="mx-auto p-4" />
+                         className="mx-auto p-4"/>
                     <div className="inline-flex pb-2 space-x-2">
 
                         <Link to="/allMusic">
                             <button type="button"
-                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
-                                <MdQueueMusic />
+                                    className=" w-32 inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
+                                <MdQueueMusic className=" text-lg mr-2" />
                                 All Music
                             </button>
                         </Link>
 
                         <Link to="/myMusic">
                             <button type="button"
-                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
-                                <RiFolderMusicLine />
+                                    className=" w-32 inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
+                                <RiFolderMusicLine className=" text-lg mr-2" />
                                 My Music
                             </button>
                         </Link>
 
                         <Link to="/generate">
                             <button type="button"
-                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
-                                <MdPlaylistAdd />
+                                    className=" w-32 inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
+                                <MdPlaylistAdd className=" text-lg mr-2" />
                                 Generate
                             </button>
                         </Link>
-
                         {isLoggedin ? (
                             <Link to="/signIn">
                                 <button type="button"
@@ -224,16 +221,16 @@ function App() {
                         ) : (
                             <Link to="/">
                                 <button type="button" onClick={logoutClicked}
-                                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
-                                    <FaRegUserCircle />
+                                    className=" w-32 inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700">
+                                <FaRegUserCircle className=" text-lg mr-2" />
                                     Logout
                                 </button>
                             </Link>
-                        )}
+                        )}    
                     </div>
                     <audio onEnded={nextSong} onPause={() => setPlaying(false)} onPlay={() => setPlaying(true)} className="mx-auto w-full"
-                        src={`http://ykh8746.iptime.org:8080/static/music/${currentSong.userId}_${currentSong.fileName}.wav`} autoPlay={true} controls>
-                        <source type="audio/mpeg" />
+                           src={`http://ykh8746.iptime.org:8080/static/music/${currentSong.userId}_${currentSong.fileName}.wav`} autoPlay={true} controls>
+                        <source type="audio/mpeg"/>
                         Your browser does not support the audio element.
                     </audio>
                 </div>

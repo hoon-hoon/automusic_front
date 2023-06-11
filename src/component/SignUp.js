@@ -47,54 +47,40 @@ export const SignUp = () => {
     }
 
     return (
-        <div className="flex flex-col">
-            <div className="signup-container">
-                <div className='image-container'>
-                    <img className="signup-img" src="/images/signupImg.jpeg" alt="signupImg" loading="lazy" />
+        <div className="flex flex-row px-10">
+            <div className="w-full">
+                <form onSubmit={handleSignUp}>
+                <div className="grid grid-cols-2">
+                    <div className="flex flex-row items-center">
+                        <label htmlFor='id' className="w-40 justify-center m-0 whitespace-nowrap">아이디</label>
+                        <input className="w-44 ml-2 font-semibold rounded-sm" type='text' name='id' id="id" value={id} onChange={userIdChanged} />
+                    </div>
+                    <div className="flex flex-row items-center">
+                        <label htmlFor='nickname' className="w-40 justify-center m-0 whitespace-nowrap">닉네임</label>
+                        <input className="w-44 ml-2 font-semibold rounded-sm" type='text' name='nickname' id="nickname" value={nickname} onChange={nickNameChanged} />
+                    </div>
+                    <div className="flex flex-row items-center">
+                        <label htmlFor='password' className="w-40 justify-center m-0 whitespace-nowrap">비밀번호</label>
+                        <input className="w-44 ml-2 font-semibold rounded-sm" type='password' name='password' id="password" value={password} onChange={passwordChanged} />
+                    </div>
+                    <div className="flex flex-row items-center">
+                        <label htmlFor='passwordCheck' className="w-40 justify-center m-0 whitespace-nowrap">비밀번호 확인</label>
+                        <div className="flex flex-row">
+                            <input className="w-44 ml-2 font-semibold rounded-sm" type='password' name='passwordCheck' id="passwordCheck" onChange={(e) => checkedPassword(e.target.value, password)} required />
+                            {passwordCheck ? (<p className="text-blue-500 ml-2">일치</p>) : (<p className="text-red-500 ml-2">불일치</p>)}
+                        </div>
+                    </div>
                 </div>
-                <div className='form-container'>
-                    <p className="title">회원가입</p>
-                    <form onSubmit={handleSignUp}>
-                    <div className="input-container">
-                        <label htmlFor='id'>아이디</label>
-                        <hr className='hrBig'></hr>
-                        <input className="id" type='text' name='id' id="id" value={id}
-                            onChange={userIdChanged} />
-                        <hr className='hrSmall'></hr>
-                    </div>
-                    <div className="input-container">
-                        <label htmlFor='password'>비밀번호</label>
-                        <hr className='hrBig'></hr>
-                        <input type='password' name='password' id="password" value={password}
-                            onChange={passwordChanged} />
-                        <hr className='hrSmall'></hr>
-                    </div>
-                    <div className="input-container">
-                        <label htmlFor='passwordCheck'>비밀번호 확인</label>
-                        <hr className='hrBig'></hr>
-                        <input type='password' name='passwordCheck' id="passwordCheck"
-                            onChange={(e) => checkedPassword(e.target.value, password)} required/>
-                            {passwordCheck 
-                                ? (<p>일치</p>) 
-                                : (<p>불일치</p>)
-                            }
-                        <hr className='hrSmall'></hr>
-                    </div>
-                    <div className="input-container">
-                        <label htmlFor='nickname'>닉네임</label>
-                        <hr className='hrBig'></hr>
-                        <input type='text' name='nickname' id="nickname" value={nickname}
-                            onChange={nickNameChanged} />
-                        <hr className='hrSmall'></hr>
-                    </div>
-                    <div>
-                    <button className="signup-button" type='submit'>회원가입</button>
-                    </div>
-                    </form>
-                    <div className='bottom-login-button'>
-                            <div className="button-text">등록된 회원 정보가 있으신가요?</div>
-                            <div className="serve-button"><Link to="/login">로그인</Link></div>
-                    </div>
+
+
+                <div className="flex justify-center mb-2">
+                    <button className="w-20 mx-10 font-bold flex justify-center p-2 bg-pink-300 hover:bg-pink-400 rounded-sm" type='submit'>
+                        회원가입</button>
+                </div>
+                </form>
+                <div className="flex flex-row justify-center mb-10">
+                    <p className="text-white flex items-center mx-2 font-semibold">등록된 회원 정보가 있으신가요?</p>
+                    <button className=" w-20 p-2 flex justify-center mx-2 font-bold bg-pink-200 hover:bg-pink-400 rounded-sm"><Link to="/login">로그인</Link></button>
                 </div>
             </div>
         </div>
