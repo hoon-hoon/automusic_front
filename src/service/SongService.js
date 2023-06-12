@@ -23,7 +23,7 @@ class SongService {
         });
     }
 
-    createSong(musicDto, successCallback) {
+    createSong(musicDto) {
         const [atmosphere, atDetail, instrument, bpm, highlow] = musicDto;
         const token = localStorage.getItem("USER");
         
