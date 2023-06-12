@@ -7,8 +7,9 @@ import StepLabel from "@mui/material/StepLabel";
 import { FormControl, FormControlLabel, Radio, RadioGroup, Slider, Typography } from "@mui/material";
 import { Instrument } from "./Instrument";
 import SongService from "../service/SongService";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
+import Loading from "./Loading";
 
 const steps = [
     "음악 분위기 선택",
@@ -63,7 +64,8 @@ const detail = [
     },
 ];
 
-export default function Generate({ createSong }) {
+export default function Generate(pros) {
+    const [isLoading, setIsLoading] = useState(false);
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
     const [musicData, setMusicData] = React.useState([""]);
@@ -80,9 +82,21 @@ export default function Generate({ createSong }) {
             })
     }, [history]);
 
+    function handleCreateSong() {
+        setIsLoading(true);
+        SongService.createSong(musicData)
+            .then((response) => {
+                pros.playSongButton(response.data)
+                setIsLoading(false);
+                alert("complete!!");
+            })
+            .catch((error) => {
+                alert("fail retry please...");
+            });
+    }
+
 
     let lastData = musicData;
-    // const navigate = useNavigate();
 
     const onBpmChanged = (event, newValue) => {
         setBpm(newValue);
@@ -171,17 +185,6 @@ export default function Generate({ createSong }) {
         console.log(e);
     }
 
-    const MusicCreate = (event) => {
-        // CreateNetwork.getMusicData(musicData);
-        // SongService.createSong(musicData);
-        createSong(musicData);
-
-        // event.preventDefault();
-
-        // const src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
-        // navigate('/music', { state: { src } });
-    }
-
     return (
         <div className="flex flex-col wrapper">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -205,13 +208,18 @@ export default function Generate({ createSong }) {
                             </Stepper>
                             {activeStep === steps.length ? (
                                 <React.Fragment>
-                                    <label style={{ marginTop: "50px", placeContent: "center" }}>
-                                        모든 과정이 끝났습니다! <br /> Create를 누르면 노래가 생성됩니다.
-                                    </label>
+                                    {isLoading ? (
+                                        <Loading />
+                                    ):(
+                                        <label style={{ marginTop: "50px", placeContent: "center" }}>
+                                            모든 과정이 끝났습니다! <br /> Create를 누르면 노래가 생성됩니다.
+                                        </label>
+                                    )}
+
                                     <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                                         <Box sx={{ flex: "1 1 auto" }} />
                                         <button onClick={handleReset}>Reset</button>
-                                        <button onClick={MusicCreate}>Create</button>
+                                        <button onClick={handleCreateSong}>Create</button>
 
                                     </Box>
                                 </React.Fragment>

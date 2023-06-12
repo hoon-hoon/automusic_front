@@ -8,8 +8,10 @@ class SongService {
         return axios.get(BACKEND_URL);
     }
 
-    getSong(fileName) {
-        return axios.get(`${BACKEND_URL}/${fileName}`);
+    getSongData(fileName) {
+        return axios.get(`${BACKEND_URL}/${fileName}`, {
+            responseType : 'blob'
+        });
     }
 
     getMySong() {
@@ -38,16 +40,6 @@ class SongService {
                     'Authorization': token
                 }
             })
-            // .then(response => {
-            //     console.log(response.data);
-            //     window.alert(`Create Success! \nFilename: ${response.data.fileName} `)
-            //     localStorage.setItem("MUSIC", response.data.fileName);
-            //     // window.location.reload();
-            // }).catch((error) => {
-            //     console.log(error);
-            // })
-            
-
     }
 
     deleteSong(song) {

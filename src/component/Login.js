@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {useHistory, Link} from "react-router-dom";
 import UserService from "../service/UserService";
 
-export const Login = () => {
+export const Login = (props) => {
     const [userId, setUserId] = useState('')
     const [password, setPassword] = useState('')
     const history = useHistory();
@@ -18,6 +18,7 @@ export const Login = () => {
     const loginButtonClicked = (event, userId, password) => {
         event.preventDefault()// 기본 클릭 동작 방지
         UserService.login(userId,password, history);
+        props.setIsLogin(true);
     }
 
     return(

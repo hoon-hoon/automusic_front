@@ -13,7 +13,6 @@ class UserService {
             .then(response => {
                 history.push("/myMusic");
                 localStorage.setItem("USER", response.data.token);
-                window.location.reload();
 
             })
             .catch(err => {

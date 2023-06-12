@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import SongService from "./service/SongService";
 import Generate from './component/Generate';
 import { RiFolderMusicLine } from "react-icons/ri";
 import { MdQueueMusic, MdPlaylistAdd } from "react-icons/md";
@@ -10,12 +9,14 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Link, useHistory
 } from "react-router-dom";
 import Home from "./component/Home";
 import Login from "./component/Login";
 import SignUp from "./component/SignUp";
 import MyMusic from "./component/MyMusic";
+import SongService from "./service/SongService";
+import UserService from "./service/UserService";
 
 
 // import Catalog from "./components/Catalog";
@@ -26,43 +27,36 @@ import MyMusic from "./component/MyMusic";
 
 function App() {
 
-    const [currentSong, setCurrentSong] = useState({
-        fileName: 'sample',
-        userId: 'sample'
-    });
-    const [isLoggedin, setIsLoggedin] = useState(false);
+    const [currentSong, setCurrentSong] = useState("http://ykh8746.iptime.org:8080/static/music/sample_sample.wav");
+    const [isLogin, setIsLogin] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
         const user = localStorage.getItem("USER");
         if (!user) {
-            setIsLoggedin(false);
+            setIsLogin(false);
             console.log("실패");
         } else {
-            setIsLoggedin(true);
+            setIsLogin(true);
             console.log(user);
             console.log("성공");
         }
     }, []);
 
     function playSongHandler(song) {
-        setCurrentSong(song);
+        SongService.getSongData(song.fileName)
+            .then((response) => {
+                const blob = response.data
+                const url = URL.createObjectURL(blob);
+                setCurrentSong(url);
+            })
     }
 
     const logoutClicked = () => {
         localStorage.removeItem("USER");
-        window.location.reload();
+        setIsLogin(false);
     }
 
-    function handleCreateSong(musicDto) {
-        SongService.createSong(musicDto)
-            .then((song) => {
-                playSongHandler(song)
-                console.log(currentSong);
-            })
-            .catch((error) => {
-                console.log("fail");
-            });
-    }
     return (
 
         <Router>
@@ -96,7 +90,7 @@ function App() {
                                 Generate
                             </button>
                         </Link>
-                        {isLoggedin ? (
+                        {isLogin ? (
 
                             <Link to="/">
                                 <button type="button" onClick={logoutClicked}
@@ -118,21 +112,20 @@ function App() {
                 </div>
                 <div className="sticky top-0">
                     <audio className="mx-auto w-full sticky top-0" autoPlay={true}
-                        src={`http://ykh8746.iptime.org:8080/static/music/${currentSong.userId}_${currentSong.fileName}.wav`} controls>
+                        src={currentSong} controls>
                         <source type="audio/mpeg" />
                         Your browser does not support the audio element.
                     </audio>
                 </div>
                 <Switch>
                     <Route path="/generate">
-                        <Generate createSong={handleCreateSong} />
-                        {/* <Generate /> */}
+                        <Generate playSongButton={playSongHandler} ></Generate>
                     </Route>
                     <Route path="/myMusic">
                         <MyMusic playSongButton={playSongHandler}></MyMusic>
                     </Route>
                     <Route path="/signin">
-                        <Login></Login>
+                        <Login setIsLogin = {setIsLogin}></Login>
                     </Route>
                     <Route path="/signUp">
                         <SignUp></SignUp>
